@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}About Project | Rockfall Early Warning System{% endblock %}
+{% block page_title %}Academic Project Dossier & Methodology{% endblock %}
+{% block page_subtitle %}Comprehensive technical documentation, course outcome mappings (CO3, CO4, CO5), and viva defense guide{% endblock %}
+
+{% block content %}
+<!-- Student & Academic Registration Banner -->
+<div class="dashboard-card" style="border-left: 5px solid #2563eb;">
+    <div class="card-header-flex">
+        <div>
+            <span style="font-size: 11.5px; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 0.5px;">Academic Capstone Project Evaluation</span>
+            <h2 style="font-size: 20px; color: #0b1d3a; margin-top: 4px;">Rockfall Early Warning and Response Coordination System for Decision Support</h2>
+        </div>
+        <span class="system-badge">CSE 2025 / Section: K2F25IL</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 14px;">
+        <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <strong style="color: #1e40af; font-size: 14px; display: block;">Student 1 (Investigator)</strong>
+            <div style="font-size: 13.5px; font-weight: 600; color: #0f172a; margin-top: 2px;">Murpasha Sachid</div>
+            <div style="font-size: 12px; color: #64748b;">Registration No: <strong>12513246</strong> | Roll No: <strong>RE3F25ILA05</strong></div>
+        </div>
+
+        <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <strong style="color: #1e40af; font-size: 14px; display: block;">Student 2 (Investigator)</strong>
+            <div style="font-size: 13.5px; font-weight: 600; color: #0f172a; margin-top: 2px;">Danala Yaswanth</div>
+            <div style="font-size: 12px; color: #64748b;">Registration No: <strong>12501101</strong> | Roll No: <strong>RE3F26ILA27</strong></div>
+        </div>
+
+        <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <strong style="color: #1e40af; font-size: 14px; display: block;">Curricular Competency</strong>
+            <div style="font-size: 13px; font-weight: 600; color: #0f172a; margin-top: 2px;">Course Outcomes: CO3, CO4, CO5</div>
+            <div style="font-size: 12px; color: #64748b;">Tools: Supervised ML, Production Systems, XAI</div>
+        </div>
+    </div>
+</div>
+
+<!-- Three Independent Pillars Architecture -->
+<div class="dashboard-card">
+    <div class="card-header-flex">
+        <h3 class="card-title"><span>🏛️</span> System Architecture: The Three Decoupled Pillars</h3>
+        <span class="system-badge">Coherent Operational Workflow</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <!-- Pillar 1 -->
+        <div style="border: 1px solid #bfdbfe; background: #eff6ff; border-radius: 8px; padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                <span style="font-size: 22px;">🧠</span>
+                <div>
+                    <strong style="color: #1e40af; font-size: 15px;">Objective 1: Supervised ML Classifier</strong>
+                    <div style="font-size: 11px; color: #3b82f6; text-transform: uppercase; font-weight: 700;">Probabilistic Multi-Sensor Pattern Recognition</div>
+                </div>
+            </div>
+            <p style="font-size: 12.5px; color: #1e3a8a; line-height: 1.5;">
+                Trains a cross-validated <strong>Random Forest Classifier</strong> (with Decision Tree benchmark) on multi-modal geological parameters (rainfall, slope angle, vibration, soil moisture, displacement rate, rock movement, lithology). Flagging elevated risk with confidence estimates and XAI feature importance.
+            </p>
+            <div style="margin-top: 12px; font-size: 11.5px; color: #1e40af; background: #ffffff; padding: 8px; border-radius: 6px; border: 1px solid #dbeafe;">
+                <strong>Acceptance Criteria:</strong> Holdout Accuracy &gt; 80%, 5-fold Stratified CV consistency (+/- 3%), zero data leakage, confusion matrix verification.
+            </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div style="border: 1px solid #fecaca; background: #fef2f2; border-radius: 8px; padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                <span style="font-size: 22px;">🛡️</span>
+                <div>
+                    <strong style="color: #991b1b; font-size: 15px;">Objective 2: Rule-Based Backstop</strong>
+                    <div style="font-size: 11px; color: #ef4444; text-transform: uppercase; font-weight: 700;">Independent Deterministic Failsafe</div>
+                </div>
+            </div>
+            <p style="font-size: 12.5px; color: #7f1d1d; line-height: 1.5;">
+                A physically decoupled rule engine monitoring extreme threshold violations. Operates unconditionally: <strong>even if the ML model predicts 'Low Risk'</strong> due to unseen distribution noise, any critical sensor spike triggers immediate emergency alerts and explains the exact physical hazard.
+            </p>
+            <div style="margin-top: 12px; font-size: 11.5px; color: #991b1b; background: #ffffff; padding: 8px; border-radius: 6px; border: 1px solid #fee2e2;">
+                <strong>Acceptance Criteria:</strong> 100% deterministic detection of critical sensor breaches, configurable thresholds, zero ML model dependencies.
+            </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div style="border: 1px solid #bbf7d0; background: #f0fdf4; border-radius: 8px; padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                <span style="font-size: 22px;">📋</span>
+                <div>
+                    <strong style="color: #166534; font-size: 15px;">Objective 3: Emergency Protocol Grounding</strong>
+                    <div style="font-size: 11px; color: #22c55e; text-transform: uppercase; font-weight: 700;">Grounded Directive Generation</div>
+                </div>
+            </div>
+            <p style="font-size: 12.5px; color: #14532d; line-height: 1.5;">
+                Upon detecting high-risk or critical breaches, retrieves the designated zone's <strong>administrator-verified safety protocol</strong>. In compliance with life-safety ethics, the system <strong>NEVER hallucinates or invents routes</strong>; if unverified, it directs personnel to official emergency contacts.
+            </p>
+            <div style="margin-top: 12px; font-size: 11.5px; color: #166534; background: #ffffff; padding: 8px; border-radius: 6px; border: 1px solid #dcfce7;">
+                <strong>Acceptance Criteria:</strong> Strict grounding to registered SOPs, explicit fallback notice when unverified, display of regulatory authority source.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scientific Geotechnical Foundations -->
+<div class="dashboard-card">
+    <div class="card-header-flex">
+        <h3 class="card-title"><span>📐</span> Geotechnical Engineering Foundations</h3>
+        <span class="system-badge">Rock Mechanics Principles</span>
+    </div>
+
+    <div style="font-size: 13.5px; color: #334155; line-height: 1.6;">
+        <p style="margin-bottom: 12px;">
+            Slope instability and rockfalls are governed by the <strong>Mohr-Coulomb Failure Criterion</strong> and the <strong>Limit Equilibrium Factor of Safety (FS)</strong>:
+        </p>
+        <div style="background: #f8fafc; border-left: 4px solid #1e40af; padding: 12px 16px; border-radius: 6px; font-family: monospace; font-size: 14px; margin-bottom: 14px;">
+            \(\tau = c + (\sigma - u) \tan(\phi)\) &emsp;|&emsp; \(FS = \frac{\text{Resisting Shear Strength } \tau}{\text{Driving Gravitational & Inertial Stress } \tau_d}\)
+        </div>
+        <ul style="padding-left: 20px; font-size: 13px; color: #475569;">
+            <li style="margin-bottom: 6px;"><strong>Rainfall & Soil Moisture:</strong> Prolonged rainfall elevates pore-water pressure (\(u\)), directly reducing effective normal stress (\(\sigma' = \sigma - u\)) and shear strength along pre-existing rock joints.</li>
+            <li style="margin-bottom: 6px;"><strong>Ground Vibration (PPV):</strong> Dynamic shockwaves induce transient inertial acceleration (\(k_h \cdot W\)), shifting the factor of safety below unity (\(FS < 1.0\)) and detaching hanging rock wedges.</li>
+            <li style="margin-bottom: 6px;"><strong>Displacement Rate & Creep Velocity:</strong> Accelerating strain displacement (\(\frac{dd}{dt} > 15 \text{ mm/day}\)) characterizes tertiary creep, signaling that micro-cracks have coalesced into a continuous catastrophic slip surface.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Viva Voce Defense Guide -->
+<div class="dashboard-card">
+    <div class="card-header-flex">
+        <h3 class="card-title"><span>🎓</span> University Viva Voce Preparation Guide</h3>
+        <span class="system-badge">Examiner Q&A Alignment</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <strong style="color: #0b1d3a; font-size: 13.5px;">Q1: Why use an independent Rule-Based Backstop in addition to Machine Learning?</strong>
+            <p style="font-size: 12.5px; color: #475569; margin-top: 4px;">
+                <em>Answer:</em> Supervised ML models are inductive and probabilistic; during unexpected sensor anomalies or out-of-distribution inputs, an ML model could theoretically predict 'Low Risk' due to feature counterbalancing. Because rockfalls pose immediate life-safety hazards, the rule-based backstop acts as a deterministic safety constraint that cannot be overridden by ML probabilities.
+            </p>
+        </div>
+
+        <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <strong style="color: #0b1d3a; font-size: 13.5px;">Q2: How does the system prevent hallucinated or dangerous evacuation instructions?</strong>
+            <p style="font-size: 12.5px; color: #475569; margin-top: 4px;">
+                <em>Answer:</em> The emergency coordination module uses deterministic document grounding. It retrieves verified evacuation routes, muster points, and incident commander contacts strictly from administrator-uploaded SOPs stored in SQLite. If a zone lacks a verified SOP, it refuses to fabricate routes and explicitly instructs responders to follow official emergency civil defense lines (112).
+            </p>
+        </div>
+
+        <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <strong style="color: #0b1d3a; font-size: 13.5px;">Q3: How was data leakage prevented during model training?</strong>
+            <p style="font-size: 12.5px; color: #475569; margin-top: 4px;">
+                <em>Answer:</em> Data preprocessing used a strict 80/20 stratified split. The feature standardizer (StandardScaler) was fitted exclusively on the 80% training set and then applied to transform both the test set and production inference requests. 5-Fold Stratified Cross Validation was conducted solely within the training partition.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

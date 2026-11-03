@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Rockfall Early Warning System{% endblock %}
+{% block page_title %}Operational Dashboard{% endblock %}
+{% block page_subtitle %}Live rockfall hazard surveillance, telemetry analytics, and active emergency directives{% endblock %}
+
+{% block content %}
+<!-- Metrics Overview Cards -->
+<div class="metric-grid">
+    <div class="metric-card">
+        <div class="metric-header">
+            <span class="metric-title">Monitored Zones</span>
+            <div class="metric-icon" style="background-color: #eff6ff; color: #1e40af;">📍</div>
+        </div>
+        <div class="metric-value">{{ summary.total_zones }}</div>
+        <div class="metric-sub">Active geotechnical sectors</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-header">
+            <span class="metric-title">Low Risk Zones</span>
+            <div class="metric-icon" style="background-color: #ecfdf5; color: #10b981;">🟢</div>
+        </div>
+        <div class="metric-value" style="color: #10b981;">{{ summary.low_risk_zones }}</div>
+        <div class="metric-sub">Stable slope parameters</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-header">
+            <span class="metric-title">Medium Risk</span>
+            <div class="metric-icon" style="background-color: #fffbeb; color: #f59e0b;">🟡</div>
+        </div>
+        <div class="metric-value" style="color: #d97706;">{{ summary.med_risk_zones }}</div>
+        <div class="metric-sub">Advisory alert / watch status</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-header">
+            <span class="metric-title">High Risk Zones</span>
+            <div class="metric-icon" style="background-color: #fef2f2; color: #ef4444;">🔴</div>
+        </div>
+        <div class="metric-value" style="color: #dc2626;">{{ summary.high_risk_zones }}</div>
+        <div class="metric-sub">Evacuation threshold reached</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-header">
+            <span class="metric-title">Active Alerts</span>
+            <div class="metric-icon" style="background-color: #fee2e2; color: #991b1b;">⚠️</div>
+        </div>
+        <div class="metric-value" style="color: #991b1b;">{{ summary.active_alerts }}</div>
+        <div class="metric-sub">{{ summary.critical_alerts }} critical threshold breaches</div>
+    </div>
+</div>
+
+<!-- Graphs & Visual Analytics Row -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px;">
+    <!-- Chart 1: Risk Level Distribution -->
+    <div class="dashboard-card" style="margin-bottom: 0;">
+        <div class="card-header-flex">
+            <h3 class="card-title"><span>📊</span> Zone Risk Distribution</h3>
+            <span class="status-badge badge-low">Live Status</span>
+        </div>
+        <div style="position: relative; height: 240px; display: flex; justify-content: center; align-items: center;">
+            <canvas id="riskDistributionChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 2: Dual-Engine Architecture Indicator -->
+    <div class="dashboard-card" style="margin-bottom: 0;">
+        <div class="card-header-flex">
+            <h3 class="card-title"><span>🛡️</span> Decision Support Integrity</h3>
+            <span class="system-badge">Fail-Safe Active</span>
+        </div>
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #1e40af;">
+                <strong style="color: #1e40af; font-size: 13.5px;">Pillar 1: Supervised ML Classifier</strong>
+                <p style="font-size: 12.5px; color: #64748b; margin-top: 4px;">Trained Random Forest (85% Accuracy) analyzing non-linear multi-sensor patterns.</p>
+            </div>
+            <div style="margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #dc2626;">
+                <strong style="color: #dc2626; font-size: 13.5px;">Pillar 2: Rule-Based Backstop</strong>
+                <p style="font-size: 12.5px; color: #64748b; margin-top: 4px;">Independent physical threshold detection (overrides ML if extreme limits breached).</p>
+            </div>
+            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #10b981;">
+                <strong style="color: #10b981; font-size: 13.5px;">Pillar 3: Grounded Emergency Protocols</strong>
+                <p style="font-size: 12.5px; color: #64748b; margin-top: 4px;">Strictly retrieves administrator-verified safety protocols; zero hallucination.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Active Alerts Banner If Critical -->
+{% if summary.recent_alerts %}
+<div class="dashboard-card" style="border-left: 4px solid #ef4444;">
+    <div class="card-header-flex">
+        <h3 class="card-title" style="color: #dc2626;"><span>🚨</span> Active Extreme Alerts</h3>
+        <a href="{{ url_for('alerts') }}" class="btn btn-outline btn-sm">Manage All Alerts &rarr;</a>
+    </div>
+    <div class="table-responsive">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Alert ID</th>
+                    <th>Zone Name</th>
+                    <th>Sensor / Rule</th>
+                    <th>Reading vs Limit</th>
+                    <th>Risk Level</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in summary.recent_alerts %}
+                <tr>
+                    <td><strong>#ALT-{{ a.id }}</strong></td>
+                    <td>{{ a.zone_name }} <span style="font-size: 11px; color: #64748b;">({{ a.zone_code }})</span></td>
+                    <td><span style="font-weight: 600;">{{ a.sensor_name }}</span></td>
+                    <td>
+                        <span style="color: #dc2626; font-weight: 700;">{{ a.reading_value }}</span> 
+                        <span style="color: #64748b; font-size: 11px;">(Limit: {{ a.threshold_value }})</span>
+                    </td>
+                    <td>
+                        {% if a.risk_level == 'High Risk' %}
+                            <span class="status-badge badge-high">High Risk</span>
+                        {% elif a.risk_level == 'Medium Risk' %}
+                            <span class="status-badge badge-med">Medium Risk</span>
+                        {% else %}
+                            <span class="status-badge badge-low">Low Risk</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="status-badge {% if a.status == 'Active' %}badge-high{% else %}badge-med{% endif %}">{{ a.status }}</span>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('generate_notice', zone_id=a.zone_id) }}" class="btn btn-danger btn-sm">🚨 View Directive</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<!-- Recent Monitoring Activities Table -->
+<div class="dashboard-card">
+    <div class="card-header-flex">
+        <h3 class="card-title"><span>📡</span> Recent Monitoring Telemetry</h3>
+        <div style="display: flex; gap: 8px;">
+            <a href="{{ url_for('sensor_data') }}" class="btn btn-outline btn-sm">Full Telemetry Log</a>
+            <a href="{{ url_for('monitoring') }}" class="btn btn-primary btn-sm">+ Log New Reading</a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Zone</th>
+                    <th>Rainfall</th>
+                    <th>Slope</th>
+                    <th>Vibration</th>
+                    <th>Moisture</th>
+                    <th>Displacement</th>
+                    <th>Movement</th>
+                    <th>Predicted Risk</th>
+                    <th>Confidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in summary.recent_readings %}
+                <tr>
+                    <td style="color: #64748b; font-size: 12px;">{{ r.timestamp }}</td>
+                    <td><strong>{{ r.zone_name }}</strong></td>
+                    <td>{{ r.rainfall_mm }} mm</td>
+                    <td>{{ r.slope_angle_deg }}°</td>
+                    <td>{{ r.vibration_intensity }} mm/s</td>
+                    <td>{{ r.soil_moisture_pct }}%</td>
+                    <td><strong>{{ r.displacement_rate_mm_day }}</strong> mm/d</td>
+                    <td>{{ r.rock_movement_mm }} mm</td>
+                    <td>
+                        {% if r.predicted_risk == 'High Risk' %}
+                            <span class="status-badge badge-high">High Risk</span>
+                        {% elif r.predicted_risk == 'Medium Risk' %}
+                            <span class="status-badge badge-med">Medium Risk</span>
+                        {% else %}
+                            <span class="status-badge badge-low">Low Risk</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ (r.confidence_score * 100) | round(1) }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Doughnut chart for risk breakdown
+    const ctx = document.getElementById('riskDistributionChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+            datasets: [{
+                data: [
+                    {{ summary.low_risk_zones }},
+                    {{ summary.med_risk_zones }},
+                    {{ summary.high_risk_zones }}
+                ],
+                backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 14,
+                        font: { size: 12 }
+                    }
+                }
+            },
+            cutout: '70%'
+        }
+    });
+});
+</script>
+{% endblock %}

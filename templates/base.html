@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Rockfall Early Warning & Decision Support{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js for lightweight, beautiful graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+        <div class="sidebar-header">
+            <div class="brand-icon">🏔️</div>
+            <div class="brand-text">
+                <h2>Rockfall Guard</h2>
+                <span>Decision Support AI</span>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' or request.endpoint == 'index' %}active{% endif %}">
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-text">Home Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('prediction') }}" class="{% if request.endpoint == 'prediction' %}active{% endif %}">
+                    <span class="menu-icon">🧠</span>
+                    <span class="menu-text">Risk Prediction</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('monitoring') }}" class="{% if request.endpoint == 'monitoring' %}active{% endif %}">
+                    <span class="menu-icon">📡</span>
+                    <span class="menu-text">Zone Monitoring</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('sensor_data') }}" class="{% if request.endpoint == 'sensor_data' %}active{% endif %}">
+                    <span class="menu-icon">📈</span>
+                    <span class="menu-text">Sensor Data</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('alerts') }}" class="{% if request.endpoint == 'alerts' %}active{% endif %}">
+                    <span class="menu-icon">🚨</span>
+                    <span class="menu-text">Emergency Alerts</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('protocols') }}" class="{% if request.endpoint == 'protocols' %}active{% endif %}">
+                    <span class="menu-icon">📋</span>
+                    <span class="menu-text">Safety Protocols</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('admin') }}" class="{% if request.endpoint == 'admin' %}active{% endif %}">
+                    <span class="menu-icon">⚙️</span>
+                    <span class="menu-text">Admin Panel</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">
+                    <span class="menu-icon">ℹ️</span>
+                    <span class="menu-text">About Project</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="status-indicator">
+                <div class="pulse-dot"></div>
+                <span>Telemetry Active</span>
+            </div>
+            <div>Dual Engine: ML + Rules</div>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+        <header class="app-topbar">
+            <div class="topbar-title">
+                <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+                <p>{% block page_subtitle %}Real-time rock slope stability monitoring and emergency coordination{% endblock %}</p>
+            </div>
+            <div class="topbar-actions">
+                <span class="system-badge">
+                    <span>🛡️</span> Grounded Protocol Mode
+                </span>
+                <a href="{{ url_for('prediction') }}" class="btn btn-primary btn-sm">+ Run Assessment</a>
+            </div>
+        </header>
+
+        <main class="content-container">
+            <!-- Flash Notification Messages -->
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert-banner {{ category }}">
+                                <span>{{ message }}</span>
+                                <button type="button" onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-weight:bold;">&times;</button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

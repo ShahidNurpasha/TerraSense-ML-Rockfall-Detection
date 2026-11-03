@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Risk Prediction | Rockfall Early Warning System{% endblock %}
+{% block page_title %}Rockfall Risk Prediction Engine{% endblock %}
+{% block page_subtitle %}Dual-engine assessment combining Supervised Machine Learning with an independent Rule-Based Backstop{% endblock %}
+
+{% block content %}
+<div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px;">
+    <!-- Column 1: Sensor Input Form -->
+    <div class="dashboard-card">
+        <div class="card-header-flex">
+            <h3 class="card-title"><span>📝</span> Manual Sensor & Geological Input</h3>
+            <span class="system-badge">Real-Time Ingestion</span>
+        </div>
+
+        <!-- Academic Viva Quick Loaders -->
+        <div style="background-color: #f1f5f9; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+            <span style="font-size: 11.5px; font-weight: 700; color: #475569; text-transform: uppercase;">⚡ Quick Scenario Presets (Viva / Demo):</span>
+            <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+                <button type="button" onclick="loadScenario('normal')" class="btn btn-secondary btn-sm" style="background:#dcfce7; color:#166534; border:1px solid #86efac;">🟢 Stable Low Risk</button>
+                <button type="button" onclick="loadScenario('medium')" class="btn btn-secondary btn-sm" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">🟡 Moderate Watch</button>
+                <button type="button" onclick="loadScenario('high')" class="btn btn-secondary btn-sm" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5;">🔴 High Failure Risk</button>
+                <button type="button" onclick="loadScenario('extreme_rule_only')" class="btn btn-secondary btn-sm" style="background:#ede9fe; color:#5b21b6; border:1px solid #c4b5fd;">🛡️ Extreme Rule Backstop Spike</button>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('prediction') }}">
+            <!-- Zone Selection (Optional) -->
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label for="zone_id">Monitoring Zone (Optional - Links Verified SOP):</label>
+                <select name="zone_id" id="zone_id" class="form-control">
+                    <option value="">-- Ad-hoc Assessment (No Specific Zone) --</option>
+                    {% for z in zones %}
+                        <option value="{{ z.id }}">{{ z.zone_code }} - {{ z.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="rainfall_mm">Rainfall Intensity <span class="unit">(mm/24h)</span>:</label>
+                    <input type="number" step="0.1" name="rainfall_mm" id="rainfall_mm" class="form-control" required placeholder="e.g. 45.0" value="35.0">
+                    <small style="color: #64748b; font-size: 11px;">Critical limit: 120.0 mm</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="slope_angle_deg">Slope Angle <span class="unit">(degrees °)</span>:</label>
+                    <input type="number" step="0.1" name="slope_angle_deg" id="slope_angle_deg" class="form-control" required placeholder="e.g. 58.0" value="52.0">
+                    <small style="color: #64748b; font-size: 11px;">Critical incline: &gt; 68.0°</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="vibration_intensity">Ground Vibration (PPV) <span class="unit">(mm/s)</span>:</label>
+                    <input type="number" step="0.1" name="vibration_intensity" id="vibration_intensity" class="form-control" required placeholder="e.g. 2.5" value="1.8">
+                    <small style="color: #64748b; font-size: 11px;">Critical limit: 9.0 mm/s</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="soil_moisture_pct">Soil Moisture <span class="unit">(%)</span>:</label>
+                    <input type="number" step="0.1" name="soil_moisture_pct" id="soil_moisture_pct" class="form-control" required placeholder="e.g. 40.0" value="38.0">
+                    <small style="color: #64748b; font-size: 11px;">Critical saturation: 80.0%</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="displacement_rate_mm_day">Displacement Rate <span class="unit">(mm/day)</span>:</label>
+                    <input type="number" step="0.1" name="displacement_rate_mm_day" id="displacement_rate_mm_day" class="form-control" required placeholder="e.g. 4.2" value="2.1">
+                    <small style="color: #64748b; font-size: 11px;">Critical rate: 15.0 mm/day</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="rock_movement_mm">Cumulative Rock Movement <span class="unit">(mm)</span>:</label>
+                    <input type="number" step="0.1" name="rock_movement_mm" id="rock_movement_mm" class="form-control" required placeholder="e.g. 6.0" value="3.5">
+                    <small style="color: #64748b; font-size: 11px;">Critical aperture: 25.0 mm</small>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 16px; margin-bottom: 24px;">
+                <label for="geological_condition">Geological Formation / Condition:</label>
+                <select name="geological_condition" id="geological_condition" class="form-control" required>
+                    <option value="Stable Bedrock">Stable Bedrock (Massive Granite / Intact Gneiss)</option>
+                    <option value="Jointed Basalt">Jointed Basalt (Columnar Jointing)</option>
+                    <option value="Fractured Limestone">Fractured Limestone (Karstic / Blocky)</option>
+                    <option value="Weathered Sandstone">Weathered Sandstone (Stratified Bedding)</option>
+                    <option value="Loose Shale & Siltstone">Loose Shale & Siltstone (Fissile / Weak)</option>
+                    <option value="Active Fault Zone">Active Fault Zone (Sheared Gouge / Breccia)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 15px;">
+                ⚡ Execute Dual-Engine Evaluation
+            </button>
+        </form>
+    </div>
+
+    <!-- Column 2: Assessment Results -->
+    <div>
+        {% if prediction_result %}
+        <!-- Module 2 Result: ML Supervised Classifier -->
+        <div class="dashboard-card" style="border-top: 4px solid {% if prediction_result.predicted_risk == 'High Risk' %}#ef4444{% elif prediction_result.predicted_risk == 'Medium Risk' %}#f59e0b{% else %}#10b981{% endif %};">
+            <div class="card-header-flex">
+                <h3 class="card-title"><span>🧠</span> Supervised ML Classification</h3>
+                <span class="status-badge {% if prediction_result.predicted_risk == 'High Risk' %}badge-high{% elif prediction_result.predicted_risk == 'Medium Risk' %}badge-med{% else %}badge-low{% endif %}" style="font-size: 14px; padding: 6px 14px;">
+                    {{ prediction_result.predicted_risk }}
+                </span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div>
+                    <span style="font-size: 12px; color: #64748b; text-transform: uppercase;">Prediction Confidence</span>
+                    <div style="font-size: 26px; font-weight: 800; color: #0b1d3a;">{{ prediction_result.confidence_pct }}%</div>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 12px; color: #64748b; text-transform: uppercase;">Benchmark Model</span>
+                    <div style="font-size: 13px; font-weight: 600; color: #475569;">Decision Tree: {{ prediction_result.comparison_prediction }}</div>
+                </div>
+            </div>
+
+            <!-- Probability Distribution Bars -->
+            <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 18px;">
+                <span style="font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase;">Class Probabilities:</span>
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                    {% for cls, prob in prediction_result.probabilities.items() %}
+                    <div style="flex: 1; text-align: center; background: #ffffff; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <span style="font-size: 11px; color: #64748b; display: block;">{{ cls }}</span>
+                        <strong style="font-size: 14px; color: #0f172a;">{{ (prob * 100) | round(1) }}%</strong>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Explainable AI (XAI) Feature Contribution -->
+            <div>
+                <span style="font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase; display: block; margin-bottom: 10px;">
+                    🔍 Explainable AI (XAI) - Key Risk Drivers:
+                </span>
+                {% for feat in prediction_result.feature_contributions[:4] %}
+                <div class="xai-bar-container">
+                    <span class="xai-label">{{ feat.label }}:</span>
+                    <div class="xai-track">
+                        <div class="xai-fill" style="width: {{ [feat.ratio_to_benchmark * 45, 100] | min }}%; background-color: {% if feat.impact_level == 'High' %}#ef4444{% elif feat.impact_level == 'Moderate' %}#f59e0b{% else %}#10b981{% endif %};"></div>
+                    </div>
+                    <span class="xai-value">{{ feat.value }} {{ feat.unit }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Module 3 Result: Independent Rule-Based Backstop -->
+        <div class="dashboard-card" style="border-top: 4px solid {% if rule_result.max_severity == 'Critical' %}#991b1b{% elif rule_result.max_severity == 'Warning' %}#f59e0b{% else %}#10b981{% endif %};">
+            <div class="card-header-flex">
+                <h3 class="card-title"><span>🛡️</span> Independent Rule-Based Backstop</h3>
+                <span class="status-badge {% if rule_result.max_severity == 'Critical' %}badge-critical{% elif rule_result.max_severity == 'Warning' %}badge-med{% else %}badge-low{% endif %}">
+                    {{ rule_result.max_severity }} Severity
+                </span>
+            </div>
+
+            {% if rule_result.has_alerts %}
+                <div style="background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 14px; margin-bottom: 12px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #991b1b; margin-bottom: 8px;">
+                        ⚠️ {{ rule_result.trigger_count }} Physical Safety Threshold(s) Breached:
+                    </div>
+                    {% for a in rule_result.alerts %}
+                        <div style="margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #fca5a5;">
+                            <strong style="color: #991b1b; font-size: 13px;">{{ a.sensor_label }}: {{ a.reading_value }} {{ a.unit }}</strong>
+                            <span style="font-size: 11.5px; color: #64748b;">(Limit: {{ a.threshold_value }})</span>
+                            <p style="font-size: 12px; color: #7f1d1d; margin-top: 2px;">{{ a.danger_reason }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 14px; color: #065f46; font-size: 13px;">
+                    ✅ <strong>All physical parameters within geotechnical safety margins.</strong> No extreme threshold backstops triggered.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Module 4 Result: Grounded Evacuation Notice (If High Risk) -->
+        {% if evacuation_notice %}
+        <div class="emergency-directive-box {% if not evacuation_notice.is_grounded %}unverified{% endif %}">
+            <div class="emergency-header">
+                <div class="emergency-icon">🚨</div>
+                <div>
+                    <h4 class="emergency-title">OFFICIAL EMERGENCY EVACUATION DIRECTIVE</h4>
+                    <span style="font-size: 12px; color: #881337;">Protocol: {{ evacuation_notice.protocol_code }}</span>
+                </div>
+            </div>
+
+            {% if not evacuation_notice.is_grounded %}
+            <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 10px; border-radius: 6px; font-size: 12px; color: #92400e; margin-bottom: 12px;">
+                {{ evacuation_notice.safety_disclaimer }}
+            </div>
+            {% endif %}
+
+            <div class="directive-grid">
+                <div class="directive-item">
+                    <strong>Affected Zone</strong>
+                    <span>{{ evacuation_notice.zone_name }} ({{ evacuation_notice.location }})</span>
+                </div>
+                <div class="directive-item">
+                    <strong>Authorized Evacuation Route</strong>
+                    <span style="color: #dc2626;">{{ evacuation_notice.evacuation_route }}</span>
+                </div>
+                <div class="directive-item">
+                    <strong>Designated Safe Muster Station</strong>
+                    <span>{{ evacuation_notice.safe_assembly_point }}</span>
+                </div>
+                <div class="directive-item">
+                    <strong>Emergency Commander & Contact</strong>
+                    <span>{{ evacuation_notice.emergency_commander }} ({{ evacuation_notice.contact_phone }})</span>
+                </div>
+            </div>
+
+            <div style="font-size: 12px; color: #64748b; margin-top: 6px;">
+                <strong>Regulatory Source:</strong> {{ evacuation_notice.authority_source }} (Verified: {{ evacuation_notice.verified_date }})
+            </div>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <!-- Placeholder before form submission -->
+        <div class="dashboard-card" style="text-align: center; padding: 60px 20px; color: #64748b;">
+            <div style="font-size: 48px; margin-bottom: 12px;">🏔️</div>
+            <h3 style="color: #0f172a; margin-bottom: 8px;">Awaiting Sensor Telemetry Input</h3>
+            <p style="font-size: 13.5px; max-width: 380px; margin: 0 auto;">
+                Fill in the sensor values or select one of the quick scenario presets, then click <strong>Execute Dual-Engine Evaluation</strong> to compute risk and check safety limits.
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

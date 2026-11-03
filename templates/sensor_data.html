@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Sensor Data Explorer | Rockfall Early Warning System{% endblock %}
+{% block page_title %}Sensor Telemetry Repository{% endblock %}
+{% block page_subtitle %}Comprehensive dataset archive, live CSV telemetry export, and batch inference ingestion{% endblock %}
+
+{% block content %}
+<!-- Action Bar with Batch Upload and CSV Export -->
+<div class="dashboard-card" style="padding: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <input type="text" placeholder="🔍 Search records by zone, date, or risk..." data-table-search="sensorDataTable" class="form-control" style="width: 320px;">
+            <span style="font-size: 13px; color: #64748b;">Showing <strong>{{ readings | length }}</strong> records</span>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <!-- Upload CSV Form -->
+            <form method="POST" action="{{ url_for('upload_sensor_csv') }}" enctype="multipart/form-data" style="display: flex; gap: 8px; align-items: center;">
+                <input type="file" name="dataset_file" accept=".csv" required class="form-control" style="padding: 6px 10px; font-size: 12px;">
+                <button type="submit" class="btn btn-secondary btn-sm">⬆️ Batch Analyze CSV</button>
+            </form>
+
+            <!-- Download CSV Button -->
+            <a href="{{ url_for('download_sensor_csv') }}" class="btn btn-primary btn-sm">
+                ⬇️ Export Telemetry CSV
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Sensor Data Table -->
+<div class="dashboard-card">
+    <div class="card-header-flex">
+        <h3 class="card-title"><span>📊</span> Geotechnical & Environmental Sensor Log</h3>
+        <span class="system-badge">Verified Telemetry Archive</span>
+    </div>
+    <div class="table-responsive">
+        <table class="custom-table" id="sensorDataTable">
+            <thead>
+                <tr>
+                    <th>Record ID</th>
+                    <th>Timestamp</th>
+                    <th>Zone Code</th>
+                    <th>Zone Name</th>
+                    <th>Rainfall</th>
+                    <th>Slope Angle</th>
+                    <th>Vibration</th>
+                    <th>Moisture</th>
+                    <th>Displacement</th>
+                    <th>Rock Movement</th>
+                    <th>Geological Formation</th>
+                    <th>Classified Risk</th>
+                    <th>Confidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in readings %}
+                <tr>
+                    <td><strong>#REC-{{ r.id }}</strong></td>
+                    <td style="color: #64748b; font-size: 12px;">{{ r.timestamp }}</td>
+                    <td><span style="font-weight: 700; color: #2563eb;">{{ r.zone_code }}</span></td>
+                    <td>{{ r.zone_name }}</td>
+                    <td>{{ r.rainfall_mm }} mm</td>
+                    <td>{{ r.slope_angle_deg }}°</td>
+                    <td>{{ r.vibration_intensity }} mm/s</td>
+                    <td>{{ r.soil_moisture_pct }}%</td>
+                    <td><strong>{{ r.displacement_rate_mm_day }}</strong> mm/d</td>
+                    <td>{{ r.rock_movement_mm }} mm</td>
+                    <td><span style="font-size: 12px; color: #475569;">{{ r.geological_condition }}</span></td>
+                    <td>
+                        <span class="status-badge {% if r.predicted_risk == 'High Risk' %}badge-high{% elif r.predicted_risk == 'Medium Risk' %}badge-med{% else %}badge-low{% endif %}">
+                            {{ r.predicted_risk }}
+                        </span>
+                    </td>
+                    <td>{{ (r.confidence_score * 100) | round(1) }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
