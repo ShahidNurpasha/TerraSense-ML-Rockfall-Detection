@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}Overview · TerraSense ML{% endblock %}{% block content %}
+<div class="page-heading"><div><div class="kicker">MONITORING INTELLIGENCE / 01</div><h1>Rockfall risk overview</h1><p>Model-assisted situational awareness across registered slope monitoring zones.</p></div><a class="button primary" href="/predict">＋ Run inference</a></div>
+<div class="metric-grid">
+<div class="metric-card"><div class="metric-top"><span>MONITORED ZONES</span><span class="metric-icon blue">◫</span></div><strong>{{ zones|length }}</strong><small>Registered site sectors</small></div>
+<div class="metric-card"><div class="metric-top"><span>OBSERVATIONS</span><span class="metric-icon violet">⌗</span></div><strong>{{ observations }}</strong><small>Stored sensor records</small></div>
+<div class="metric-card"><div class="metric-top"><span>ACTIVE ALERTS</span><span class="metric-icon red">⚑</span></div><strong>{{ open_alerts }}</strong><small>Require operator review</small></div>
+<div class="metric-card"><div class="metric-top"><span>HOLD-OUT ACCURACY</span><span class="metric-icon green">◈</span></div><strong>{{ metrics.accuracy }}<em>%</em></strong><small>Synthetic demonstration split</small></div>
+</div>
+<div class="content-grid">
+<section class="surface chart-panel"><div class="section-head"><div><h2>Risk class distribution</h2><p>Predicted classes recorded by the inference service</p></div><span class="subtle-tag">OBSERVATION HISTORY</span></div><div class="chart-wrap"><canvas id="classChart"></canvas></div></section>
+<section class="surface model-panel"><div class="section-head"><div><h2>Model snapshot</h2><p>Random Forest classifier · 5-fold stratified CV</p></div><span class="status-pill"><span class="live-dot"></span> TRAINED</span></div>
+<div class="model-score"><strong>{{ metrics.cv_accuracy }}<small>%</small></strong><span>Mean CV accuracy</span></div><div class="score-line"><span>CV standard deviation</span><b>± {{ metrics.cv_std }}%</b></div><div class="score-line"><span>Macro F1-score</span><b>{{ metrics.f1 }}%</b></div><a class="text-link" href="/model-lab">Open model diagnostics →</a><div class="data-warning">Synthetic dataset · Results are illustrative, not field validated.</div></section>
+</div>
+<div class="content-grid lower-grid">
+<section class="surface"><div class="section-head"><div><h2>Latest observations</h2><p>Most recent model inference records</p></div><a class="text-link" href="/observations">View all →</a></div>
+<div class="table-scroll"><table><thead><tr><th>ZONE</th><th>CLASS</th><th>CONFIDENCE</th><th>TIME</th></tr></thead><tbody>{% for r in latest %}<tr><td><b>{{ r.zone_code }}</b><small>{{ r.zone_name }}</small></td><td><span class="class-badge {{ r.predicted_class|lower }}">{{ r.predicted_class }}</span></td><td>{{ r.confidence }}%</td><td>{{ r.created_at }}</td></tr>{% else %}<tr><td colspan="4" class="empty">No inference records yet. Run a prediction to populate this table.</td></tr>{% endfor %}</tbody></table></div></section>
+<section class="surface"><div class="section-head"><div><h2>Alert activity</h2><p>Independent threshold engine</p></div><a class="text-link" href="/alerts">Alert center →</a></div>
+{% for a in recent %}<div class="activity-row"><span class="activity-indicator {{ a.severity|lower }}"></span><div><b>{{ a.sensor_key.replace('_',' ')|title }}</b><small>{{ a.zone_code }} · {{ a.sensor_value }} / limit {{ a.threshold_value }}</small></div><span class="class-badge {{ a.severity|lower }}">{{ a.severity }}</span></div>{% else %}<div class="empty-block">No threshold events have been generated.</div>{% endfor %}</section>
+</div>
+{% endblock %}{% block scripts %}<script>
+new Chart(document.getElementById('classChart'),{type:'bar',data:{labels:['LOW','MODERATE','HIGH'],datasets:[{data:[{{ class_counts.LOW }},{{ class_counts.MODERATE }},{{ class_counts.HIGH }}],backgroundColor:['#20a477','#e8ad48','#df6262'],borderRadius:6,maxBarThickness:52}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#718096'}},y:{beginAtZero:true,grid:{color:'#edf0f4'},ticks:{precision:0,color:'#718096'}}}}});
+</script>{% endblock %}
