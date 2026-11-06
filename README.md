@@ -12,11 +12,11 @@ An AI-powered decision support web application that identifies potential rockfal
 ## 🎓 Academic Project Information
 
 - **Project Title:** Rockfall Early Warning and Response Coordination System for Decision Support
-- **Course / Outcome:** CSE 2025 / CO3, CO4, CO5
-- **Section / Group:** K2F25IL
+- **Course / Outcome:** SDE 2025 (Record ID: SDE25071) / CO3, CO4, CO5
+- **Section / Group:** K23PD1L (Group Project)
 - **Students / Investigators:**
-  1. **Murpasha Sachid** | Reg No: `12513246` | Roll No: `RE3F25ILA05`
-  2. **Danala Yaswanth** | Reg No: `12501101` | Roll No: `RE3F26ILA27`
+  1. **Murpasha Sachid** | Reg No: `12513246` | Roll No: `RE3F261LA05`
+  2. **Danala Yaswanth** | Reg No: `12501101` | Roll No: `RE3F261LA27`
 - **Methodology & Competencies:** Supervised Classification, Production Systems, Explainable AI (XAI), Geotechnical Engineering Constraints.
 
 ---
