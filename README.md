@@ -1,9 +1,12 @@
-# Rockfall Early Warning and Response Coordination System for Decision Support
+# Rockfall Early Warning and Response Coordination System for Decision Support (TerraSense ML)
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Render_Deployment-success?style=for-the-badge&logo=render)](https://terrasense-ml-rockfall-detection.onrender.com/)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/Framework-Flask_3.1-black.svg)](https://flask.palletsprojects.com/)
 [![Machine Learning](https://img.shields.io/badge/ML-Scikit--Learn-orange.svg)](https://scikit-learn.org/)
 [![Database](https://img.shields.io/badge/Database-SQLite3-lightgrey.svg)](https://sqlite.org/)
+
+> 🌐 **Live Cloud Deployment URL:** [https://terrasense-ml-rockfall-detection.onrender.com/](https://terrasense-ml-rockfall-detection.onrender.com/)
 
 An AI-powered decision support web application that identifies potential rockfall risks from geological sensor telemetry, detects extreme reading anomalies through an independent deterministic backstop, and provides grounded evacuation coordination based exclusively on verified safety protocols.
 
