@@ -6,21 +6,24 @@ TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
 1. ACADEMIC PROJECT DETAILS:
 --------------------------------------------------------------------------------
 - Project Title: Rockfall Early Warning and Response Coordination System for Decision Support
+- Project Name: TerraSense ML
 - Course Name: SDE 2025
 - Course Record ID: SDE25071
-- Section: K23PD1L
+- Section: K3P25IL
 - Project Group: Group #9
 - Course Outcomes: CO3 (Supervised Classification), CO4 (Production Systems), CO5 (Decision Support)
 
 2. STUDENT INVESTIGATORS:
 --------------------------------------------------------------------------------
-- Student 1: Murpasha Sachid
-  Registration Number: 12513246
-  Roll Number: RE3F261LA05
+- Student 1: Nurpasha Shahid
+  Registration Number: 12513245
+  Roll Number: 05 (RE3F25ILA05)
+  Section: K3P25IL
 
-- Student 2: Danala Yaswanth
-  Registration Number: 12501101
-  Roll Number: RE3F261LA27
+- Student 2: Banala Yaswanth
+  Registration Number: 12501181
+  Roll Number: 27 (RE3F25ILA27)
+  Section: K3P25IL
 
 3. ONLINE PROJECT LINKS:
 --------------------------------------------------------------------------------

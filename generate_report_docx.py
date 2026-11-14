@@ -43,7 +43,7 @@ def create_report(output_path="PROJECT_REPORT.docx"):
     # ==========================================
     p_inst = doc.add_paragraph()
     p_inst.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run_inst = p_inst.add_run("ACADEMIC CAPSTONE PROJECT REPORT — SDE 2025\nRECORD ID: SDE25071 | SECTION: K23PD1L\n")
+    run_inst = p_inst.add_run("ACADEMIC CAPSTONE PROJECT REPORT — SDE 2025\nRECORD ID: SDE25071 | SECTION: K3P25IL\n")
     run_inst.font.name = "Arial"
     run_inst.font.size = Pt(11)
     run_inst.font.bold = True
@@ -73,9 +73,9 @@ def create_report(output_path="PROJECT_REPORT.docx"):
     meta_table = doc.add_table(rows=5, cols=2)
     meta_table.alignment = WD_TABLE_ALIGNMENT.CENTER
     meta_data = [
-        ("Project Group", "Group #9 (Course Outcomes: CO3, CO4, CO5)"),
-        ("Student Investigator 1", "Murpasha Sachid | Reg No: 12513246 | Roll No: RE3F261LA05"),
-        ("Student Investigator 2", "Danala Yaswanth | Reg No: 12501101 | Roll No: RE3F261LA27"),
+        ("Project Group", "Group #9 (Course Outcomes: CO3, CO4, CO5) | Section: K3P25IL"),
+        ("Student Investigator 1", "Nurpasha Shahid | Reg No: 12513245 | Roll No: 05 (RE3F25ILA05)"),
+        ("Student Investigator 2", "Banala Yaswanth | Reg No: 12501181 | Roll No: 27 (RE3F25ILA27)"),
         ("Live Cloud Application", "https://terrasense-ml-rockfall-detection.onrender.com/"),
         ("Source Code Repository", "https://github.com/ShahidNurpasha/cse276.git")
     ]
