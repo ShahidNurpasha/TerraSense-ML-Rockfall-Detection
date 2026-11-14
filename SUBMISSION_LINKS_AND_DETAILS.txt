@@ -1,0 +1,81 @@
+================================================================================
+ROCKFALL EARLY WARNING AND RESPONSE COORDINATION SYSTEM FOR DECISION SUPPORT
+TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
+================================================================================
+
+1. ACADEMIC PROJECT DETAILS:
+--------------------------------------------------------------------------------
+- Project Title: Rockfall Early Warning and Response Coordination System for Decision Support
+- Course Name: SDE 2025
+- Course Record ID: SDE25071
+- Section: K23PD1L
+- Project Group: Group #9
+- Course Outcomes: CO3 (Supervised Classification), CO4 (Production Systems), CO5 (Decision Support)
+
+2. STUDENT INVESTIGATORS:
+--------------------------------------------------------------------------------
+- Student 1: Murpasha Sachid
+  Registration Number: 12513246
+  Roll Number: RE3F261LA05
+
+- Student 2: Danala Yaswanth
+  Registration Number: 12501101
+  Roll Number: RE3F261LA27
+
+3. ONLINE PROJECT LINKS:
+--------------------------------------------------------------------------------
+- GitHub Source Code Repository:
+  https://github.com/ShahidNurpasha/cse276.git
+
+- Live Cloud Web Application Deployment:
+  https://terrasense-ml-rockfall-detection.onrender.com/
+
+4. CONTENTS OF THIS UMS SUBMISSION PACKAGE:
+--------------------------------------------------------------------------------
+This ZIP package contains all required university deliverables:
+
+1. [Source_Code/]
+   - Complete working Flask web application
+   - app.py (Main web server & API routing)
+   - model.py (Scikit-Learn ML training, 5-Fold Stratified CV, leakage prevention)
+   - prediction.py (Inference engine & Explainable AI feature drivers)
+   - alert_system.py (Independent rule-based extreme reading backstop)
+   - emergency_response.py (Verified SOP retrieval & Zero-Hallucination coordination)
+   - database.py (SQLite schema initialization & baseline telemetry seeding)
+   - rockfall.db (Pre-seeded demonstration database)
+   - requirements.txt (Python dependencies)
+   - run_app.bat (1-Click Windows execution launcher)
+   - test_system.py (Automated 6-step test suite with 100% pass rate)
+   - templates/ (8 responsive HTML pages with Jinja2 templating)
+   - static/ (Navy-white UI styles, interactive scenario JS, confusion matrix plots)
+   - data/ (Curated synthetic geotechnical demonstration dataset)
+   - models/ (Pre-trained Joblib model bundle & cross-validation metrics)
+
+2. [Project_Report.docx]
+   - Comprehensive, 10-chapter academic project report formatted for university evaluation.
+
+3. [Presentation_Slides.pptx]
+   - Professional 14-slide PowerPoint presentation with custom dark-navy visual styling,
+     covering problem context, architecture, geotechnical formulas, ML vs Rule-Based results,
+     live cloud demo workflow, and viva voce defense questions.
+
+4. [README.md]
+   - Complete project documentation, installation steps, and evaluation guide.
+
+5. HOW TO RUN LOCALLY:
+--------------------------------------------------------------------------------
+Method A (1-Click Windows Launcher):
+   Double-click `run_app.bat` inside the Source_Code folder.
+   It will start the server and open http://127.0.0.1:5000 in your default browser.
+
+Method B (Command Line):
+   1. Open terminal in Source_Code folder:
+      pip install -r requirements.txt
+   2. Start the application:
+      python app.py
+   3. Open browser at:
+      http://127.0.0.1:5000
+
+================================================================================
+Generated for UMS Academic Project Submission | Deadline: 15 November 2026
+================================================================================
