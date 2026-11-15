@@ -674,8 +674,8 @@ def api_protocol(zone_id):
 @app.route('/api/rag/ask', methods=['POST'])
 def api_rag_ask():
     """JSON API for RAG AI Question Answering & Grounded Directive Generation."""
-    data = request.get_json() or {}
-    query = data.get('query', '').strip()
+    data = request.get_json(silent=True) or request.form or {}
+    query = (data.get('query') or data.get('rag_query') or '').strip()
     zone_id = data.get('zone_id')
     telemetry = data.get('sensor_telemetry')
     if not query:
