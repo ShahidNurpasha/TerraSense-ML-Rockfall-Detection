@@ -20,13 +20,17 @@ An AI-powered decision support web application that identifies potential rockfal
 - **Students / Investigators:**
   1. **Nurpasha Shahid** | Reg No: `12513245` | Roll No: `05` (`RE3F25ILA05`)
   2. **Banala Yaswanth** | Reg No: `12501181` | Roll No: `27` (`RE3F25ILA27`)
-- **Methodology & Competencies:** Supervised Classification, Production Systems, Explainable AI (XAI), Geotechnical Engineering Constraints.
+- **Methodology & Competencies:**
+  1. **Supervised Classification** (Random Forest Classifier & Decision Tree Benchmark)
+  2. **Production Systems** (Independent Rule-Based Extreme Reading Backstop)
+  3. **RAG: Retrieval-Augmented Generation** (Grounded Emergency Response with Zero Hallucination)
+  4. **Explainable AI (XAI)** (Model Interpretability & Gini Feature Importance Rankings)
 
 ---
 
-## 🏛️ System Architecture & Three Core Pillars
+## 🏛️ System Architecture: The Four Core Pillars
 
-The application combines three independent but tightly coordinated components into one cohesive web dashboard:
+The application combines four tightly coordinated technical paradigms into one cohesive web platform:
 
 ```
                           ┌──────────────────────────────────────────────┐

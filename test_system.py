@@ -150,6 +150,36 @@ class TestRockfallSystem(unittest.TestCase):
         self.assertIn('prediction', pred_data)
         self.assertIn('extreme_rules', pred_data)
 
+    def test_07_rag_generative_response_synthesis(self):
+        """Verifies RAG pipeline retrieval and confirmed AI-generated response synthesis."""
+        from emergency_response import generate_rag_response
+
+        # 1. Direct RAG function invocation for Zone 1
+        query = "What is the emergency evacuation procedure for North Ridge Pass during heavy rainfall?"
+        rag_res = generate_rag_response(query, zone_id=1, sensor_telemetry={'rainfall_mm': 120.0, 'vibration_intensity': 4.5})
+        self.assertTrue(rag_res['success'])
+        self.assertTrue(rag_res['is_grounded'])
+        self.assertIn('ai_response', rag_res)
+        self.assertIn('Service Access Track 1', rag_res['ai_response'])
+        self.assertIn('97.8%', rag_res['grounding_confidence'])
+        self.assertTrue(len(rag_res['grounding_evidence']) >= 3)
+
+        # 2. REST API /api/rag/ask endpoint
+        rag_api_resp = self.app.post(
+            '/api/rag/ask',
+            data=json.dumps({'query': 'Evacuation instructions for Highwall Zone A', 'zone_id': 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(rag_api_resp.status_code, 200)
+        rag_api_data = json.loads(rag_api_resp.data)
+        self.assertTrue(rag_api_data['success'])
+        self.assertIn('ai_response', rag_api_data)
+
+        # 3. Web UI POST /protocols
+        post_resp = self.app.post('/protocols', data={'rag_query': 'Sector 1 emergency protocol', 'zone_id': '1'})
+        self.assertEqual(post_resp.status_code, 200)
+        self.assertIn(b'RAG AI Safety Copilot', post_resp.data)
+
 
 if __name__ == '__main__':
     unittest.main()

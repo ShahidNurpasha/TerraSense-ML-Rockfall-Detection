@@ -11,6 +11,11 @@ TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
 - Course Record ID: SDE25071
 - Section: K3P25IL
 - Project Group: Group #9
+- Core Competencies / Rubrics:
+  1. Supervised Classification (Random Forest & Decision Tree)
+  2. Production Systems (Independent Rule-Based Failsafe Backstop)
+  3. RAG: Retrieval-Augmented Generation (Grounded Emergency Protocol Directives)
+  4. Explainable AI: XAI (Gini Feature Importance & Real-Time Driver Attribution)
 - Course Outcomes: CO3 (Supervised Classification), CO4 (Production Systems), CO5 (Decision Support)
 
 2. STUDENT INVESTIGATORS:

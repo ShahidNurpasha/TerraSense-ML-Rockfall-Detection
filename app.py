@@ -35,6 +35,7 @@ from emergency_response import (
     get_zone_protocol,
     get_all_protocols_with_zones,
     generate_grounded_evacuation_notice,
+    generate_rag_response,
     save_or_update_protocol
 )
 from model import train_and_evaluate_models
@@ -191,7 +192,9 @@ def prediction():
                 trigger_reason = f"Elevated Hazard Detected: ML Prediction ({prediction_result['predicted_risk']}) "
                 if rule_result['has_alerts']:
                     trigger_reason += f"with {len(rule_result['alerts'])} extreme sensor threshold breaches"
-                evacuation_notice = generate_grounded_evacuation_notice(selected_zone, trigger_reason, alert_severity='High Risk')
+                evacuation_notice = generate_grounded_evacuation_notice(
+                    selected_zone, trigger_reason, alert_severity='High Risk', sensor_telemetry=sensor_payload
+                )
 
             # 4. Save to prediction history in database
             conn = get_db_connection()
@@ -470,11 +473,34 @@ def update_alert_status():
     return redirect(url_for('alerts'))
 
 
-@app.route('/protocols')
+@app.route('/protocols', methods=['GET', 'POST'])
 def protocols():
-    """Module 4: Verified Safety Protocols viewer and emergency retrieval."""
+    """Module 4: Verified Safety Protocols & RAG AI Response Coordination."""
     all_protocols = get_all_protocols_with_zones()
-    return render_template('protocols.html', protocols=all_protocols)
+    rag_result = None
+    query_text = ""
+    selected_zone_id = None
+
+    if request.method == 'POST':
+        query_text = request.form.get('rag_query', '').strip()
+        zone_id_raw = request.form.get('zone_id', '').strip()
+        selected_zone_id = int(zone_id_raw) if zone_id_raw.isdigit() else None
+        if query_text:
+            rag_result = generate_rag_response(query_text, zone_id=selected_zone_id)
+    elif request.args.get('q'):
+        query_text = request.args.get('q', '').strip()
+        zone_id_raw = request.args.get('zone_id', '').strip()
+        selected_zone_id = int(zone_id_raw) if zone_id_raw.isdigit() else None
+        if query_text:
+            rag_result = generate_rag_response(query_text, zone_id=selected_zone_id)
+
+    return render_template(
+        'protocols.html',
+        protocols=all_protocols,
+        rag_result=rag_result,
+        query_text=query_text,
+        selected_zone_id=selected_zone_id
+    )
 
 
 @app.route('/protocols/generate-notice/<int:zone_id>')
@@ -643,6 +669,24 @@ def api_protocol(zone_id):
         alert_severity=row['current_risk']
     )
     return jsonify(notice)
+
+
+@app.route('/api/rag/ask', methods=['POST'])
+def api_rag_ask():
+    """JSON API for RAG AI Question Answering & Grounded Directive Generation."""
+    data = request.get_json() or {}
+    query = data.get('query', '').strip()
+    zone_id = data.get('zone_id')
+    telemetry = data.get('sensor_telemetry')
+    if not query:
+        return jsonify({'success': False, 'error': 'Query text is required'}), 400
+    try:
+        if zone_id is not None:
+            zone_id = int(zone_id)
+    except (ValueError, TypeError):
+        zone_id = None
+    result = generate_rag_response(query, zone_id=zone_id, sensor_telemetry=telemetry)
+    return jsonify(result)
 
 
 if __name__ == '__main__':
