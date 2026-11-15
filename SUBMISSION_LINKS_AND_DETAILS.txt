@@ -30,13 +30,16 @@ TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
   Roll Number: 27 (RE3F25ILA27)
   Section: K3P25IL
 
-3. ONLINE PROJECT LINKS:
+3. PROJECT LINKS & APPLICATION URLS:
 --------------------------------------------------------------------------------
 - GitHub Source Code Repository:
   https://github.com/ShahidNurpasha/cse276.git
 
-- Live Cloud Web Application Deployment:
-  https://terrasense-ml-rockfall-detection.onrender.com/
+- Local Application Server:
+  http://127.0.0.1:5000/
+
+- RAG AI Safety Protocols & Grounded Response Copilot:
+  http://127.0.0.1:5000/protocols
 
 4. CONTENTS OF THIS UMS SUBMISSION PACKAGE:
 --------------------------------------------------------------------------------

@@ -1,12 +1,14 @@
 # Rockfall Early Warning and Response Coordination System for Decision Support (TerraSense ML)
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Render_Deployment-success?style=for-the-badge&logo=render)](https://terrasense-ml-rockfall-detection.onrender.com/)
+[![Local App](https://img.shields.io/badge/Application_Server-http%3A%2F%2F127.0.0.1%3A5000-blue?style=for-the-badge&logo=python)](http://127.0.0.1:5000)
+[![RAG Copilot](https://img.shields.io/badge/RAG_AI_Copilot-http%3A%2F%2F127.0.0.1%3A5000%2Fprotocols-success?style=for-the-badge)](http://127.0.0.1:5000/protocols)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/Framework-Flask_3.1-black.svg)](https://flask.palletsprojects.com/)
 [![Machine Learning](https://img.shields.io/badge/ML-Scikit--Learn-orange.svg)](https://scikit-learn.org/)
 [![Database](https://img.shields.io/badge/Database-SQLite3-lightgrey.svg)](https://sqlite.org/)
 
-> 🌐 **Live Cloud Deployment URL:** [https://terrasense-ml-rockfall-detection.onrender.com/](https://terrasense-ml-rockfall-detection.onrender.com/)
+> 🚀 **Local Web Application URL:** [http://127.0.0.1:5000/](http://127.0.0.1:5000/)  
+> 🤖 **RAG AI Safety Protocols & Copilot:** [http://127.0.0.1:5000/protocols](http://127.0.0.1:5000/protocols)
 
 An AI-powered decision support web application that identifies potential rockfall risks from geological sensor telemetry, detects extreme reading anomalies through an independent deterministic backstop, and provides grounded evacuation coordination based exclusively on verified safety protocols.
 

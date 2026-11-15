@@ -164,7 +164,7 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
     foot = s1.shapes.add_textbox(Inches(1.0), Inches(6.45), Inches(11.333), Inches(0.7))
     tf = foot.text_frame
     p = tf.paragraphs[0]
-    p.text = "Course: SDE 2025  |  Record ID: SDE25071  |  Outcomes: CO3, CO4, CO5  |  Section: K3P25IL\nLive Web App: https://terrasense-ml-rockfall-detection.onrender.com/  |  GitHub: github.com/ShahidNurpasha/cse276"
+    p.text = "Course: SDE 2025  |  Record ID: SDE25071  |  Outcomes: CO3, CO4, CO5  |  Section: K3P25IL\nApplication URL: http://127.0.0.1:5000/  |  RAG Protocols: http://127.0.0.1:5000/protocols  |  GitHub: github.com/ShahidNurpasha/cse276"
     p.font.size = Pt(11)
     p.font.bold = True
     p.font.color.rgb = RGBColor(148, 163, 184)
@@ -797,23 +797,23 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
     tf.word_wrap = True
     tf.margin_left = tf.margin_top = Inches(0.2)
     p = tf.paragraphs[0]
-    p.text = "CLOUD PRODUCTION INFRASTRUCTURE"
+    p.text = "APPLICATION DEPLOYMENT & LOCAL EXECUTION"
     p.font.size = Pt(12)
     p.font.bold = True
     p.font.color.rgb = ROYAL_BLUE
     p = tf.add_paragraph()
-    p.text = "Live Web Deployment on Render"
+    p.text = "Local Web Server & RAG Copilot"
     p.font.size = Pt(17)
     p.font.bold = True
     p.font.color.rgb = NAVY_DARK
 
     cloud_points = [
-        ("Live URL:", "https://terrasense-ml-rockfall-detection.onrender.com/"),
-        ("Hosting Platform:", "Render Web Services (Linux, Gunicorn/Python 3.11 environment)."),
+        ("Application Server:", "http://127.0.0.1:5000/ (Serving live locally)"),
+        ("RAG Safety Copilot:", "http://127.0.0.1:5000/protocols (AI Response Generation)"),
         ("Source Code Repository:", "https://github.com/ShahidNurpasha/cse276.git"),
-        ("Local 1-Click Execution:", "Included 'run_app.bat' for local offline Windows execution."),
-        ("Verification Status:", "All 6 automated unit tests passing (HTTP 200 OK across all 8 web endpoints)."),
-        ("Mobile & Desktop Ready:", "Fully responsive web UI accessible by field engineers on phones and tablets.")
+        ("Local 1-Click Execution:", "Included 'run_app.bat' for instant Windows execution."),
+        ("Verification Status:", "All 7 automated unit tests passing (100% pass rate)."),
+        ("Mobile & Desktop Ready:", "Fully responsive web UI accessible by field engineers on all screens.")
     ]
     for h, b in cloud_points:
         p = tf.add_paragraph()
@@ -919,7 +919,8 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
 
     p = tf16.add_paragraph()
     p.text = (
-        "\n🌐 Live Cloud Deployment: https://terrasense-ml-rockfall-detection.onrender.com/\n"
+        "\n🚀 Application Server: http://127.0.0.1:5000/\n"
+        "🤖 RAG Protocols & AI Copilot: http://127.0.0.1:5000/protocols\n"
         "💻 GitHub Repository: https://github.com/ShahidNurpasha/cse276.git\n"
         "🎓 Student Investigators: Nurpasha Shahid (12513245) & Banala Yaswanth (12501181) | Section: K3P25IL"
     )
