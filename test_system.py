@@ -120,7 +120,9 @@ class TestRockfallSystem(unittest.TestCase):
             '/alerts',
             '/protocols',
             '/admin',
-            '/about'
+            '/about',
+            '/chatbot',
+            '/assistant'
         ]
         for route in routes:
             resp = self.app.get(route)

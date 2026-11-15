@@ -58,6 +58,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url_for('chatbot') }}" class="{% if request.endpoint == 'chatbot' %}active{% endif %}">
+                    <span class="menu-icon">🤖</span>
+                    <span class="menu-text">AI Assistant (RAG)</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ url_for('admin') }}" class="{% if request.endpoint == 'admin' %}active{% endif %}">
                     <span class="menu-icon">⚙️</span>
                     <span class="menu-text">Admin Panel</span>
@@ -116,5 +122,29 @@
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     {% block scripts %}{% endblock %}
+
+    <!-- Floating TerraSense RAG AI Chatbot Widget -->
+    {% if request.endpoint != 'chatbot' %}
+    <div id="terrasense-rag-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+        <button id="ts-widget-toggle" onclick="toggleFloatingChat()"
+            style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: white; font-weight: 700; padding: 11px 18px; border-radius: 9999px; border: 2px solid #34d399; box-shadow: 0 10px 25px rgba(0,0,0,0.35); cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; font-family: sans-serif; transition: transform 0.2s;"
+            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <span style="font-size: 16px;">🤖</span>
+            <span>TerraSense AI Assistant</span>
+        </button>
+        <iframe id="ts-rag-frame" src="{{ url_for('chatbot') }}?embed=true"
+            style="display: none; position: fixed; bottom: 76px; right: 20px; width: 440px; max-width: 92vw; height: 620px; max-height: 80vh; border: 1px solid #334155; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); z-index: 9999; background: #0b1120;"
+            title="TerraSense RAG AI Chatbot">
+        </iframe>
+    </div>
+    <script>
+    function toggleFloatingChat() {
+        const frame = document.getElementById('ts-rag-frame');
+        if (frame) {
+            frame.style.display = frame.style.display === 'none' ? 'block' : 'none';
+        }
+    }
+    </script>
+    {% endif %}
 </body>
 </html>

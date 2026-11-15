@@ -624,6 +624,13 @@ def about():
     return render_template('about.html', metrics=metrics)
 
 
+@app.route('/chatbot')
+@app.route('/assistant')
+def chatbot():
+    """Module 9: Interactive TerraSense AI Assistant & RAG Chatbot."""
+    return render_template('chatbot.html')
+
+
 # -------------------------------------------------------------------------
 # REST API Endpoints (For Asynchronous UI Updates & Testing)
 # -------------------------------------------------------------------------
@@ -690,8 +697,9 @@ def api_rag_ask():
 
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
     print("="*60)
     print("Rockfall Early Warning and Response Coordination System")
-    print("Server starting on http://127.0.0.1:5000 (0.0.0.0)")
+    print(f"Server starting on http://127.0.0.1:{port} (0.0.0.0)")
     print("="*60)
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=port, debug=False)

@@ -74,8 +74,9 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         ("Project Group", "Group #9 (Course Outcomes: CO3, CO4, CO5) | Section: K3P25IL"),
         ("Student Investigator 1", "Nurpasha Shahid | Reg No: 12513245 | Roll No: 05 (RE3F25ILA05)"),
         ("Student Investigator 2", "Banala Yaswanth | Reg No: 12501181 | Roll No: 27 (RE3F25ILA27)"),
+        ("Live Cloud Application", "https://terrasense-ml-rockfall-detection.onrender.com/"),
+        ("RAG Chatbot Assistant", "https://terrasense-ml-rockfall-detection.onrender.com/chatbot"),
         ("Local Application Server", "http://127.0.0.1:5000/"),
-        ("RAG Protocols & Copilot", "http://127.0.0.1:5000/protocols"),
         ("Source Code Repository", "https://github.com/ShahidNurpasha/cse276.git")
     ]
     meta_table = doc.add_table(rows=len(meta_data), cols=2)
@@ -118,7 +119,7 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         "It retrieves only administrator-verified standard operating procedures (SOPs) from SQLite. When unverified, it explicitly refuses to invent "
         "synthetic evacuation routes or assembly points and triggers an official safety contingency directive citing emergency services (112).\n\n"
         "The complete system is implemented as a lightweight, production-ready Python Flask web application, verified through a 7-step automated "
-        "test suite, and running live on the local application server at http://127.0.0.1:5000/ with RAG response coordination at http://127.0.0.1:5000/protocols."
+        "test suite, and deployed live to cloud infrastructure at https://terrasense-ml-rockfall-detection.onrender.com/ (with local server at http://127.0.0.1:5000/)."
     )
 
     # ==========================================
@@ -319,9 +320,10 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         "• test_05_web_routes: Asserts HTTP 200 OK across all 8 web endpoints.\n"
         "• test_06_api_endpoints: Validates JSON REST response schemas.\n"
         "• test_07_rag_generative_response_synthesis: Validates RAG natural language generation, REST API endpoint, and UI integration.\n\n"
-        "2. Application Server Deployment:\n"
-        "The application is served live locally with complete offline autonomy at:\n"
-        "http://127.0.0.1:5000/ (Main Dashboard) and http://127.0.0.1:5000/protocols (RAG Copilot)\n\n"
+        "2. Cloud & Local Deployment:\n"
+        "The application is hosted live on Render Web Services at:\n"
+        "https://terrasense-ml-rockfall-detection.onrender.com/\n"
+        "Additionally, full offline local autonomy is supported via http://127.0.0.1:5000/ (run_app.bat).\n\n"
         "3. Source Code Version Control:\n"
         "All code, commits, and assets are tracked on GitHub at:\n"
         "https://github.com/ShahidNurpasha/cse276.git"

@@ -35,11 +35,17 @@ TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
 - GitHub Source Code Repository:
   https://github.com/ShahidNurpasha/cse276.git
 
-- Local Application Server:
-  http://127.0.0.1:5000/
+- Live Cloud Web Application Deployment:
+  https://terrasense-ml-rockfall-detection.onrender.com/
 
-- RAG AI Safety Protocols & Grounded Response Copilot:
-  http://127.0.0.1:5000/protocols
+- Interactive RAG AI Chatbot Assistant:
+  https://terrasense-ml-rockfall-detection.onrender.com/chatbot
+
+- Grounded Safety Protocols & Emergency Coordination:
+  https://terrasense-ml-rockfall-detection.onrender.com/protocols
+
+- Local Application Server:
+  http://127.0.0.1:5000/ (or http://127.0.0.1:5000/protocols)
 
 4. CONTENTS OF THIS UMS SUBMISSION PACKAGE:
 --------------------------------------------------------------------------------
