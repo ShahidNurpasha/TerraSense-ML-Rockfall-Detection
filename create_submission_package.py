@@ -64,19 +64,19 @@ https://github.com/ShahidNurpasha/cse276.git
 
 LIVE DEPLOYMENT LINK:
 
-https://terrasense-ml-rockfall-detection.onrender.com/
+https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com
 
 
 
 INTERACTIVE RAG AI ASSISTANT CHATBOT:
 
-https://terrasense-ml-rockfall-detection.onrender.com/chatbot
+https://untainted-share-confront.ngrok-free.dev/chatbot
 
 
 
 GROUNDED SAFETY PROTOCOLS & RESPONSE COPILOT:
 
-https://terrasense-ml-rockfall-detection.onrender.com/protocols
+https://untainted-share-confront.ngrok-free.dev/protocols
 
 
 

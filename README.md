@@ -1,16 +1,16 @@
 # Rockfall Early Warning and Response Coordination System for Decision Support (TerraSense ML)
 
-[![Live Web Application](https://img.shields.io/badge/Live_Deployment-Render_Web_Services-success?style=for-the-badge&logo=render)](https://terrasense-ml-rockfall-detection.onrender.com/)
+[![Live Web Application](https://img.shields.io/badge/Live_Deployment-Online_Active-success?style=for-the-badge&logo=ngrok)](https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com)
 [![Local App](https://img.shields.io/badge/Local_Server-http%3A%2F%2F127.0.0.1%3A5000-blue?style=for-the-badge&logo=python)](http://127.0.0.1:5000)
-[![RAG AI Assistant](https://img.shields.io/badge/AI_Assistant_RAG-Chatbot-purple?style=for-the-badge)](https://terrasense-ml-rockfall-detection.onrender.com/chatbot)
+[![RAG AI Assistant](https://img.shields.io/badge/AI_Assistant_RAG-Chatbot-purple?style=for-the-badge)](https://untainted-share-confront.ngrok-free.dev/chatbot)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/Framework-Flask_3.1-black.svg)](https://flask.palletsprojects.com/)
 [![Machine Learning](https://img.shields.io/badge/ML-Scikit--Learn-orange.svg)](https://scikit-learn.org/)
 [![Database](https://img.shields.io/badge/Database-SQLite3-lightgrey.svg)](https://sqlite.org/)
 
-> 🌐 **Live Web Application URL:** [https://terrasense-ml-rockfall-detection.onrender.com/](https://terrasense-ml-rockfall-detection.onrender.com/)  
-> 🤖 **Interactive RAG AI Chatbot Assistant:** [https://terrasense-ml-rockfall-detection.onrender.com/chatbot](https://terrasense-ml-rockfall-detection.onrender.com/chatbot)  
-> 📋 **Grounded Safety Protocols & Response:** [https://terrasense-ml-rockfall-detection.onrender.com/protocols](https://terrasense-ml-rockfall-detection.onrender.com/protocols)  
+> 🌐 **Live Web Application URL:** [https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com](https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com)  
+> 🤖 **Interactive RAG AI Chatbot Assistant:** [https://untainted-share-confront.ngrok-free.dev/chatbot](https://untainted-share-confront.ngrok-free.dev/chatbot)  
+> 📋 **Grounded Safety Protocols & Response:** [https://untainted-share-confront.ngrok-free.dev/protocols](https://untainted-share-confront.ngrok-free.dev/protocols)  
 > 💻 **Local Offline Execution:** [http://127.0.0.1:5000/](http://127.0.0.1:5000/) (Launch with `run_app.bat`)
 
 An AI-powered decision support web application that identifies potential rockfall risks from geological sensor telemetry, detects extreme reading anomalies through an independent deterministic backstop, and provides grounded evacuation coordination based exclusively on verified safety protocols.

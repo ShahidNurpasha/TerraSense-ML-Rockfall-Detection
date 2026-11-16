@@ -164,7 +164,7 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
     foot = s1.shapes.add_textbox(Inches(1.0), Inches(6.45), Inches(11.333), Inches(0.7))
     tf = foot.text_frame
     p = tf.paragraphs[0]
-    p.text = "Course: SDE 2025  |  Record ID: SDE25071  |  Outcomes: CO3, CO4, CO5  |  Section: K3P25IL\nLive Web App: https://terrasense-ml-rockfall-detection.onrender.com/  |  GitHub: github.com/ShahidNurpasha/cse276"
+    p.text = "Course: SDE 2025  |  Record ID: SDE25071  |  Outcomes: CO3, CO4, CO5  |  Section: K3P25IL\nLive Web App: https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com  |  GitHub: github.com/ShahidNurpasha/cse276"
     p.font.size = Pt(11)
     p.font.bold = True
     p.font.color.rgb = RGBColor(148, 163, 184)
@@ -802,15 +802,15 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
     p.font.bold = True
     p.font.color.rgb = ROYAL_BLUE
     p = tf.add_paragraph()
-    p.text = "Live Web Deployment on Render"
+    p.text = "Live Web Deployment & Public Access"
     p.font.size = Pt(17)
     p.font.bold = True
     p.font.color.rgb = NAVY_DARK
 
     cloud_points = [
-        ("Live URL:", "https://terrasense-ml-rockfall-detection.onrender.com/"),
-        ("Interactive RAG AI Chatbot:", "https://terrasense-ml-rockfall-detection.onrender.com/chatbot"),
-        ("Hosting Platform:", "Render Web Services (Gunicorn WSGI production runtime)."),
+        ("Live URL:", "https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com"),
+        ("Interactive RAG AI Chatbot:", "https://untainted-share-confront.ngrok-free.dev/chatbot"),
+        ("RAG Protocols & Copilot:", "https://untainted-share-confront.ngrok-free.dev/protocols"),
         ("Source Code Repository:", "https://github.com/ShahidNurpasha/cse276.git"),
         ("Local 1-Click Execution:", "Included 'run_app.bat' for offline Windows execution (http://127.0.0.1:5000)."),
         ("Verification Status:", "All 7 automated unit tests passing (100% pass rate).")
@@ -909,7 +909,7 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
         "• CO4 (Production Systems): Independent Rule-Based Extreme Reading Backstop guaranteeing deterministic physical life-safety override.\n"
         "• CO5 (Decision Support & Response): Grounded emergency coordination adhering to Zero Hallucination Constraint, retrieving verified SOPs.\n"
         "• Working Web Application: 8 complete modules built with Flask, SQLite, Matplotlib, and Scikit-Learn.\n"
-        "• Cloud Production: Deployed and verified on Render Web Services with automated 6-step test suite pass.\n"
+        "• Live Production: Publicly deployed and accessible via secure live URL with automated test suite pass.\n"
         "• UMS Submission: Source code, formal 10-chapter report, 16-slide presentation deck, and links packaged into single ZIP archive."
     )
     p = tf16.add_paragraph()
@@ -919,8 +919,8 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
 
     p = tf16.add_paragraph()
     p.text = (
-        "\n🌐 Live Cloud Deployment: https://terrasense-ml-rockfall-detection.onrender.com/\n"
-        "🤖 RAG AI Assistant Chatbot: https://terrasense-ml-rockfall-detection.onrender.com/chatbot\n"
+        "\n🌐 Live Deployment: https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com\n"
+        "🤖 RAG AI Assistant Chatbot: https://untainted-share-confront.ngrok-free.dev/chatbot\n"
         "💻 GitHub Repository: https://github.com/ShahidNurpasha/cse276.git\n"
         "🎓 Student Investigators: Nurpasha Shahid (12513245) & Banala Yaswanth (12501181) | Section: K3P25IL"
     )
