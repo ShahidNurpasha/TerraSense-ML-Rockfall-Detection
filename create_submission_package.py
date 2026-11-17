@@ -179,6 +179,7 @@ def build_final_zip(zip_filename, inner_folder_name="CSE276_P09_12513245_1250118
         "prediction.py",
         "alert_system.py",
         "emergency_response.py",
+        "ai_chatbot_engine.py",
         "database.py",
         "rockfall.db",
         "Procfile",

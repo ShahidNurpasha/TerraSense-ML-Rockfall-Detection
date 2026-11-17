@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TerraSense AI Assistant | Geotechnical RAG Chatbot</title>
+    <title>TerraSense AI Assistant | Multi-Domain ChatGPT & Geotechnical RAG</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter & JetBrains Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -56,9 +56,9 @@
             background: #475569;
         }
         .glass-panel {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(17, 24, 39, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
         .typing-dot {
             animation: bounce 1.4s infinite ease-in-out both;
@@ -69,43 +69,106 @@
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1); }
         }
+        /* Markdown formatting styles */
+        .markdown-body h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #34d399;
+            margin-top: 0.75rem;
+            margin-bottom: 0.35rem;
+        }
+        .markdown-body h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #60a5fa;
+            margin-top: 0.6rem;
+            margin-bottom: 0.3rem;
+        }
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.75rem 0;
+            font-size: 0.8rem;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid #334155;
+            padding: 6px 10px;
+            text-align: left;
+        }
+        .markdown-body th {
+            background-color: rgba(30, 41, 59, 0.8);
+            color: #34d399;
+            font-weight: 600;
+        }
+        .markdown-body td {
+            background-color: rgba(15, 23, 42, 0.4);
+        }
+        .markdown-body pre {
+            position: relative;
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .copy-code-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-code-btn:hover {
+            color: #34d399;
+            background: #334155;
+        }
     </style>
 </head>
 <body class="h-screen w-screen overflow-hidden flex items-center justify-center bg-[#0b1120] selection:bg-emerald-500/30 selection:text-emerald-200">
 
-    <!-- Main App Container (Adapts automatically to standalone or ?embed=true mode) -->
+    <!-- Main Container -->
     <div id="app-wrapper" class="w-full h-full md:w-[95vw] md:max-w-5xl md:h-[92vh] md:rounded-2xl border border-slate-800/90 shadow-2xl shadow-black/80 flex flex-col overflow-hidden glass-panel relative transition-all duration-300">
 
         <!-- Top Navigation Header -->
-        <header class="px-4 py-3.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between gap-2 shrink-0 z-20">
+        <header class="px-4 py-3 bg-slate-900/95 border-b border-slate-800 flex items-center justify-between gap-2 shrink-0 z-20">
             <div class="flex items-center gap-3 min-w-0">
-                <!-- Geotechnical Radar Icon -->
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-900/40 border border-emerald-500/40 flex items-center justify-center shrink-0 shadow-inner">
-                    <i data-lucide="mountain-snow" class="w-5 h-5 text-emerald-400"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/25 via-teal-700/30 to-blue-900/40 border border-emerald-500/40 flex items-center justify-center shrink-0 shadow-inner">
+                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-2">
                         <h1 class="font-semibold text-slate-100 text-sm sm:text-base truncate tracking-tight">TerraSense AI Assistant</h1>
-                        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shrink-0">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                            RAG Knowledge Base Active
+                            ChatGPT-Style Multi-Domain AI
                         </span>
                     </div>
                     <p class="text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
-                        <span>Geotechnical Slope Stability & Rockfall Intelligence</span>
+                        <span>Capstone Intelligence • AI & ML • Geotechnical Science • Code Generator</span>
                         <span class="text-slate-600">•</span>
-                        <span id="chunk-counter" class="font-mono text-emerald-400/90">8 Chunks Indexed</span>
+                        <span id="chunk-counter" class="font-mono text-emerald-400/90">25+ Topics Indexed</span>
                     </p>
                 </div>
             </div>
 
-            <!-- Action Controls -->
+            <!-- Header Controls -->
             <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <a id="back-to-dashboard-btn" href="/" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium bg-slate-800 hover:bg-slate-700/90 text-slate-200 border border-slate-700/80 transition-all active:scale-95" title="Return to Main Dashboard">
                     <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-blue-400"></i>
                     <span class="hidden sm:inline">Dashboard</span>
                 </a>
-                <button onclick="toggleKBModal(true)" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium bg-slate-800 hover:bg-slate-700/90 text-slate-200 border border-slate-700/80 transition-all active:scale-95" title="Manage RAG Knowledge Base & Embed Code">
+                <button onclick="toggleKBModal(true)" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium bg-slate-800 hover:bg-slate-700/90 text-slate-200 border border-slate-700/80 transition-all active:scale-95" title="Explore Knowledge Base & Embed Widget">
                     <i data-lucide="database" class="w-3.5 h-3.5 text-emerald-400"></i>
                     <span class="hidden sm:inline">Knowledge Base</span>
                     <span class="sm:hidden">KB</span>
@@ -116,52 +179,66 @@
             </div>
         </header>
 
+        <!-- Category Filter Pills Bar -->
+        <div class="px-4 py-2 bg-slate-900/60 border-b border-slate-800/80 flex items-center gap-2 overflow-x-auto shrink-0 no-scrollbar">
+            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider shrink-0 flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3 text-amber-400"></i> Explore:
+            </span>
+            <button onclick="setPromptCategory('all')" class="cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all">
+                🌟 All Topics (ChatGPT)
+            </button>
+            <button onclick="setPromptCategory('project')" class="cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all">
+                🪨 TerraSense Rockfall
+            </button>
+            <button onclick="setPromptCategory('aiml')" class="cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all">
+                🧠 Machine Learning
+            </button>
+            <button onclick="setPromptCategory('code')" class="cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all">
+                💻 Python & Code
+            </button>
+            <button onclick="setPromptCategory('geo')" class="cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all">
+                📐 Geotechnical Science
+            </button>
+            <button onclick="setPromptCategory('general')" class="cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all">
+                🌍 General Knowledge
+            </button>
+        </div>
+
         <!-- Chat Messages Stream -->
         <main id="chat-messages" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 scroll-smooth">
             <!-- Welcome Card -->
             <div class="flex items-start gap-3 max-w-3xl">
-                <div class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                    <i data-lucide="bot" class="w-4 h-4 text-emerald-400"></i>
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-800/30 border border-emerald-500/40 flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
                 </div>
-                <div class="bg-slate-800/75 border border-slate-700/70 rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200 leading-relaxed shadow-md space-y-2.5">
+                <div class="bg-slate-800/85 border border-slate-700/80 rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200 leading-relaxed shadow-lg space-y-2.5">
                     <div class="flex items-center justify-between gap-2">
-                        <span class="font-semibold text-emerald-400 text-xs uppercase tracking-wider">TerraSense Geotechnical RAG Core</span>
-                        <span class="text-[11px] font-mono text-slate-400">v2.5 • Grounded</span>
+                        <span class="font-semibold text-emerald-400 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            TerraSense Multi-Domain AI Assistant
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-400">v3.0 • ChatGPT Intelligence</span>
                     </div>
                     <p>
-                        Welcome to the <strong>TerraSense ML Rockfall Detection</strong> AI Assistant. I am grounded in your real-time slope monitoring architecture, telemetry sensor thresholds, and emergency SOPs.
+                        Welcome! I am your <strong>ChatGPT-style AI Assistant</strong> equipped with deep knowledge across <strong>TerraSense ML Rockfall Detection</strong>, artificial intelligence, geotechnical science, Python programming, physics, and general knowledge.
                     </p>
-                    <p class="text-slate-300 text-xs">
-                        You can ask technical questions below, upload custom sensor logs/documentation into the <strong>Knowledge Base</strong>, or copy the <strong>Embed Snippet</strong> for Antigravity integration.
+                    <p class="text-xs text-slate-300">
+                        Ask me <strong>anything and everything</strong>—from writing Python slope stability code and explaining Random Forest mathematics, to project credentials (Nurpasha Shahid & Banala Yaswanth, LPU), quantum physics, or general everyday questions!
                     </p>
                 </div>
             </div>
         </main>
 
-        <!-- Quick-Action Suggested Prompts -->
-        <div id="quick-prompts-bar" class="px-4 py-2.5 bg-slate-900/50 border-t border-slate-800/70 flex items-center gap-2 overflow-x-auto shrink-0 no-scrollbar">
-            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider shrink-0 flex items-center gap-1">
-                <i data-lucide="sparkles" class="w-3 h-3 text-amber-400"></i> Suggested:
-            </span>
-            <button onclick="sendSuggestedPrompt(this)" class="shrink-0 text-xs px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all">
-                How does TerraSense calculate rockfall risk levels?
-            </button>
-            <button onclick="sendSuggestedPrompt(this)" class="shrink-0 text-xs px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all">
-                What is the SOP when a High Risk alert triggers?
-            </button>
-            <button onclick="sendSuggestedPrompt(this)" class="shrink-0 text-xs px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all">
-                Explain how rainfall and pore pressure affect slope stability.
-            </button>
-            <button onclick="sendSuggestedPrompt(this)" class="shrink-0 text-xs px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all">
-                How can I integrate new sensor logs into this RAG bot?
-            </button>
+        <!-- Suggested Prompts Bar -->
+        <div id="quick-prompts-bar" class="px-4 py-2.5 bg-slate-900/70 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto shrink-0 no-scrollbar">
+            <!-- Dynamically populated based on active category -->
         </div>
 
         <!-- Chat Input Footer -->
         <footer class="p-3 sm:p-4 bg-slate-900/95 border-t border-slate-800 shrink-0">
             <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex items-end gap-2 max-w-4xl mx-auto">
                 <div class="relative flex-1">
-                    <textarea id="user-input" rows="1" placeholder="Ask about slope telemetry, ML thresholds, or evacuation SOPs..." class="w-full bg-slate-800/90 text-slate-100 placeholder-slate-400 text-sm rounded-xl pl-4 pr-10 py-3 border border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none resize-none max-h-32 leading-snug transition-colors" onkeydown="handleTextareaKey(event)"></textarea>
+                    <textarea id="user-input" rows="1" placeholder="Ask me anything (e.g. 'Explain Random Forest', 'Write Python code for slope stability', 'Who built this project?')..." class="w-full bg-slate-800/90 text-slate-100 placeholder-slate-400 text-sm rounded-xl pl-4 pr-10 py-3 border border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none resize-none max-h-32 leading-snug transition-colors" onkeydown="handleTextareaKey(event)"></textarea>
                 </div>
                 <button type="submit" id="send-btn" class="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium shadow-lg shadow-emerald-950/50 transition-all active:scale-95 shrink-0 flex items-center justify-center" title="Send Query">
                     <i data-lucide="send" class="w-4 h-4"></i>
@@ -169,19 +246,19 @@
             </form>
         </footer>
 
-        <!-- Knowledge Base & Embed Manager Modal / Drawer -->
-        <div id="kb-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
-            <div class="bg-slate-900 border border-slate-700/90 rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <!-- Knowledge Base & Embed Manager Modal -->
+        <div id="kb-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+            <div class="bg-slate-900 border border-slate-700/90 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                 
                 <!-- Modal Header -->
-                <div class="px-5 py-4 bg-slate-950/60 border-b border-slate-800 flex items-center justify-between">
+                <div class="px-5 py-4 bg-slate-950/70 border-b border-slate-800 flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
                         <div class="p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30">
                             <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
                         </div>
                         <div>
-                            <h2 class="text-sm sm:text-base font-semibold text-white">RAG Knowledge Base & Antigravity Embed</h2>
-                            <p class="text-xs text-slate-400">Ingest live telemetry logs, SOP docs, or export widget code</p>
+                            <h2 class="text-sm sm:text-base font-semibold text-white">Multi-Domain Knowledge Base & Website Embed</h2>
+                            <p class="text-xs text-slate-400">Explore indexed knowledge topics across AI, geotechnical engineering, project architecture, and code</p>
                         </div>
                     </div>
                     <button onclick="toggleKBModal(false)" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
@@ -191,76 +268,78 @@
 
                 <!-- Modal Tabs -->
                 <div class="flex border-b border-slate-800 bg-slate-900/60 px-5 pt-2 gap-4 text-xs font-medium">
-                    <button id="tab-btn-ingest" onclick="switchKBTab('ingest')" class="pb-2.5 border-b-2 border-emerald-400 text-emerald-400 transition-colors">
-                        1. Ingest Documents / Logs
+                    <button id="tab-btn-topics" onclick="switchKBTab('topics')" class="pb-2.5 border-b-2 border-emerald-400 text-emerald-400 transition-colors">
+                        1. Indexed Knowledge Topics (<span id="modal-chunk-count">25+</span>)
                     </button>
-                    <button id="tab-btn-chunks" onclick="switchKBTab('chunks')" class="pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition-colors">
-                        2. Indexed Chunks (<span id="modal-chunk-count">8</span>)
+                    <button id="tab-btn-ingest" onclick="switchKBTab('ingest')" class="pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition-colors">
+                        2. Add Custom Notes / Logs
                     </button>
                     <button id="tab-btn-embed" onclick="switchKBTab('embed')" class="pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition-colors">
-                        3. Antigravity Embed Snippet
+                        3. Embed Code for Website
                     </button>
                 </div>
 
                 <!-- Modal Body -->
-                <div class="p-5 overflow-y-auto flex-1 space-y-5 text-sm">
+                <div class="p-5 overflow-y-auto flex-1 space-y-4 text-sm">
                     
-                    <!-- TAB 1: INGEST -->
-                    <div id="kb-tab-ingest" class="space-y-4">
+                    <!-- TAB 1: TOPICS LIST -->
+                    <div id="kb-tab-topics" class="space-y-3">
+                        <div class="flex items-center gap-2">
+                            <div class="relative flex-1">
+                                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+                                <input id="kb-search-input" type="text" placeholder="Search knowledge base (e.g. 'Random Forest', 'Factor of Safety', 'Zone A', 'Python')..." class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-400 focus:border-emerald-500 focus:outline-none" oninput="filterIndexedTopics()">
+                            </div>
+                        </div>
+                        <div id="chunks-list-container" class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: INGEST CUSTOM NOTES -->
+                    <div id="kb-tab-ingest" class="hidden space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-medium text-slate-300 mb-1.5">Document / Source Title</label>
-                                <input id="doc-title-input" type="text" placeholder="e.g., Sector-B Piezometer Log Nov 2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none">
+                                <label class="block text-xs font-medium text-slate-300 mb-1.5">Note / Telemetry Title</label>
+                                <input id="doc-title-input" type="text" placeholder="e.g., Quarry Highwall Blast Observation Nov 2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-slate-300 mb-1.5">Upload File (.txt, .md, .json, .csv)</label>
+                                <label class="block text-xs font-medium text-slate-300 mb-1.5">Upload Text File (.txt, .md, .csv)</label>
                                 <label class="flex items-center justify-center gap-2 w-full bg-slate-800 hover:bg-slate-750 border border-dashed border-slate-600 hover:border-emerald-400 rounded-xl px-3.5 py-2 text-xs text-slate-300 cursor-pointer transition-colors">
                                     <i data-lucide="upload-cloud" class="w-4 h-4 text-emerald-400"></i>
-                                    <span id="file-upload-label">Choose File to Auto-Chunk</span>
+                                    <span id="file-upload-label">Choose File to Import</span>
                                     <input type="file" id="kb-file-input" accept=".txt,.md,.json,.csv" class="hidden" onchange="handleFileUpload(event)">
                                 </label>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1.5">Paste Geotechnical Text, Sensor Telemetry, or SOPs</label>
-                            <textarea id="doc-content-input" rows="5" placeholder="Paste raw slope displacement logs, geotechnical survey reports, or custom alert rules here. The RAG engine will automatically split text into overlapping semantic chunks and index TF-IDF vectors..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-xs text-slate-200 placeholder-slate-500 focus:border-emerald-500 focus:outline-none font-mono leading-relaxed"></textarea>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5">Paste Custom Knowledge, Guidelines or Sensor Log</label>
+                            <textarea id="doc-content-input" rows="6" placeholder="Paste custom notes, survey findings, or instructions. The chatbot will index them in this session and use them for answering your questions..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-xs text-slate-200 placeholder-slate-500 focus:border-emerald-500 focus:outline-none font-mono leading-relaxed"></textarea>
                         </div>
 
                         <div class="flex items-center justify-between pt-1">
                             <span id="ingest-feedback" class="text-xs text-emerald-400 font-medium"></span>
                             <button onclick="ingestCustomDocument()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium flex items-center gap-1.5 shadow-lg shadow-emerald-950/40 transition-all active:scale-95">
                                 <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-                                Chunk & Index into Vector Store
+                                Save Note to Knowledge Base
                             </button>
-                        </div>
-                    </div>
-
-                    <!-- TAB 2: INDEXED CHUNKS -->
-                    <div id="kb-tab-chunks" class="hidden space-y-3">
-                        <div class="flex items-center justify-between">
-                            <p class="text-xs text-slate-400">Active knowledge chunks searched during every user query via TF-IDF Cosine & Keyword Overlap:</p>
-                            <button onclick="resetDefaultKB()" class="text-xs text-amber-400 hover:text-amber-300 underline">Restore Defaults</button>
-                        </div>
-                        <div id="chunks-list-container" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
-                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
                     <!-- TAB 3: EMBED SNIPPET -->
                     <div id="kb-tab-embed" class="hidden space-y-4">
                         <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-200 leading-relaxed">
-                            <strong>Ready for Antigravity Integration:</strong> Host this single HTML file (on Render, Vercel, Netlify, or Localhost) and give the URL with <code class="bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">?embed=true</code> to Antigravity, or paste the floating widget snippet below into your TerraSense website.
+                            <strong>Floating AI Assistant Widget:</strong> Add this chatbot to any page on your website by pasting the snippet below right before your closing <code class="bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">&lt;/body&gt;</code> tag.
                         </div>
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-xs font-medium text-slate-300">Floating Widget HTML/JS Snippet (for TerraSense Site)</label>
+                                <label class="text-xs font-medium text-slate-300">Floating Chatbot Widget Code</label>
                                 <button onclick="copyEmbedCode()" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 transition-colors">
                                     <i data-lucide="copy" class="w-3 h-3"></i>
                                     <span id="copy-embed-label">Copy Snippet</span>
                                 </button>
                             </div>
-                            <textarea id="embed-code-box" readonly rows="9" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] font-mono text-slate-300 focus:outline-none select-all"></textarea>
+                            <textarea id="embed-code-box" readonly rows="8" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] font-mono text-slate-300 focus:outline-none select-all"></textarea>
                         </div>
                     </div>
 
@@ -268,7 +347,7 @@
             </div>
         </div>
 
-        <!-- Toast Notification Box (Replaces alert()) -->
+        <!-- Toast Notification Box -->
         <div id="toast-box" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-slate-800 border border-emerald-500/50 text-xs text-emerald-300 shadow-xl flex items-center gap-2">
             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
             <span id="toast-message">Action completed</span>
@@ -278,7 +357,7 @@
 
     <script>
         // ============================================================================
-        // 1. INITIALIZATION & EMBED MODE DETECTION (?embed=true)
+        // 1. EMBED MODE DETECTION (?embed=true)
         // ============================================================================
         const urlParams = new URLSearchParams(window.location.search);
         const isEmbedMode = urlParams.get('embed') === 'true';
@@ -292,208 +371,87 @@
         }
 
         // ============================================================================
-        // 2. PRE-LOADED TERRASENSE ML GEOTECHNICAL KNOWLEDGE BASE
+        // 2. SUGGESTED PROMPTS BY CATEGORY
         // ============================================================================
-        const DEFAULT_KNOWLEDGE_BASE = [
-            {
-                id: 'TS-ARCH-01',
-                title: 'TerraSense Platform Architecture & Pipeline',
-                category: 'System Overview',
-                content: 'TerraSense ML Rockfall Detection is an end-to-end geotechnical hazard monitoring platform. It ingests multi-modal real-time telemetry from open-pit mine benches, highway rock cuts, and unstable mountain slopes. Data streams through an inference pipeline using Random Forest and Decision Tree classifiers coupled with an independent rule-based backstop to predict rockfall probability and classify slope state into Low, Medium, or High/Critical risk tiers.'
-            },
-            {
-                id: 'TS-RISK-02',
-                title: 'Risk Scoring & Classification Thresholds',
-                category: 'ML Model & Risk Scoring',
-                content: 'TerraSense calculates a composite Rockfall Risk Level (Low, Medium, High). Low Risk (Green): Normal background creep (< 0.5 mm/day), stable pore pressure, low vibration (< 2.0 mm/s). Medium Risk (Amber): Accelerating displacement (5.0 - 15.0 mm/day), rising moisture, or moderate vibration (2.0 - 7.0 mm/s). High/Critical Risk (Red): Tertiary creep acceleration (> 15.0 mm/day), vibration > 9.0 mm/s, or rainfall > 120 mm indicating imminent rockmass detachment.'
-            },
-            {
-                id: 'TS-SENS-03',
-                title: 'Geotechnical Sensor Telemetry & Inputs',
-                category: 'Sensor Telemetry',
-                content: 'The TerraSense ML feature vector combines 6 core physical sensor modalities: (1) Rainfall Intensity (mm) tracking continuous 24h precipitation; (2) Slope Angle (degrees) measuring steepness; (3) Vibration Intensity (PPV mm/s) monitoring blasting and seismic shockwaves; (4) Soil Moisture (%) measuring interstitial groundwater saturation; (5) Displacement Rate (mm/day) capturing progressive shear movement; and (6) Rock Movement Aperture (mm) measuring tension crack widening.'
-            },
-            {
-                id: 'TS-HYDR-04',
-                title: 'Rainfall & Pore Water Pressure Mechanics',
-                category: 'Geotechnical Physics',
-                content: 'Intense or prolonged rainfall infiltrates discontinuities and tension cracks in rock slopes, rapidly increasing pore water pressure (u). According to the Mohr-Coulomb failure criterion (tau = c + (sigma - u) * tan(phi)), elevated pore water pressure reduces the effective normal stress acting across potential sliding planes, directly lowering available shear strength. TerraSense tracks both rainfall (> 120 mm critical limit) and moisture (> 75%) to catch rain-induced slope failures.'
-            },
-            {
-                id: 'TS-SOP-LOW-05',
-                title: 'SOP: Low & Medium Risk Operational Protocols',
-                category: 'Emergency SOPs',
-                content: 'Low Risk SOP: Maintain standard telemetry polling, automated daily sensor calibrations, and routine visual bench inspections. Medium Risk SOP (Amber Alert): Automatically increase sensor sampling frequency, inspect diversion catch-drains, restrict heavy haul-truck speeds near the slope toe, and alert the on-duty geotechnical supervisor.'
-            },
-            {
-                id: 'TS-SOP-HIGH-06',
-                title: 'SOP: High / Critical Risk Evacuation Protocol',
-                category: 'Emergency SOPs',
-                content: 'High / Critical Risk SOP (Red Alert): (1) Immediate automated sounding of audible sirens and strobe beacons; (2) Instant evacuation via designated corridor (e.g. Service Access Track 1 for Zone A); (3) Muster roll head-count at designated assembly points (e.g. Helipad Station Alpha); (4) Complete operational halt on blasting and heavy haulage within a 1.5 km radius; (5) Contact Incident Command (Col. R. Verma / Helpline 112).'
-            },
-            {
-                id: 'TS-ML-07',
-                title: 'ML Feature Engineering & XAI Driver Attribution',
-                category: 'ML Model & XAI Specs',
-                content: 'To provide full interpretability for safety engineers, TerraSense uses Explainable AI (XAI) feature importance ranking. Slope displacement rate (28.5%) and rock movement aperture (22.4%) represent the primary kinematic drivers, followed by rainfall intensity (18.2%) and soil moisture (12.1%). Dynamic feature attribution explains why a specific risk tier was predicted.'
-            },
-            {
-                id: 'TS-API-08',
-                title: 'API Integration & REST Endpoints',
-                category: 'System Architecture & APIs',
-                content: 'TerraSense exposes RESTful JSON endpoints (/api/stats, /api/predict, /api/protocol/<zone_id>, and /api/rag/ask) accepting sensor telemetry and natural language emergency queries. Operators can test grounded evacuation directives or ingest site-specific documentation directly into this RAG Assistant via the Knowledge Base manager.'
-            }
-        ];
+        const CATEGORY_PROMPTS = {
+            all: [
+                "Explain the 4 academic pillars of TerraSense ML",
+                "How does Random Forest predict rockfall risks?",
+                "Write Python code to calculate Factor of Safety",
+                "What are the rules for the deterministic backstop?",
+                "What happens during extreme rainfall in Zone A?",
+                "Explain supervised vs unsupervised learning",
+                "Explain quantum computing and qubits",
+                "Who developed this project?"
+            ],
+            project: [
+                "Explain the 4 academic pillars of TerraSense ML",
+                "Who developed this project?",
+                "What are the rules for the deterministic backstop?",
+                "Explain the geological profiles of Zones A through E",
+                "How does the Zero Hallucination guardrail protect Zone E?"
+            ],
+            aiml: [
+                "How does Random Forest calculate Gini Impurity?",
+                "Explain supervised vs unsupervised learning",
+                "What are Precision, Recall and F1-Score formulas?",
+                "Explain how Transformers and Self-Attention work",
+                "Why is 5-fold cross-validation used in model training?"
+            ],
+            code: [
+                "Write Python code to calculate Factor of Safety",
+                "Write Python code for the extreme reading backstop",
+                "Give me a Python script for geological telemetry analysis",
+                "Explain how Flask handles RESTful JSON APIs"
+            ],
+            geo: [
+                "Explain how rainfall and pore pressure trigger rockfalls",
+                "What is the Mohr-Coulomb failure criterion?",
+                "What sensors are used for slope monitoring?",
+                "Explain rockfall mitigation: catch nets, rock bolts and shotcrete"
+            ],
+            general: [
+                "Explain quantum computing and qubits",
+                "What is photosynthesis and the Calvin cycle?",
+                "How does Git version control track commits?",
+                "Tell me a geology joke"
+            ]
+        };
 
-        let knowledgeBase = [...DEFAULT_KNOWLEDGE_BASE];
-        let chatHistory = [];
+        let activeCategory = 'all';
 
-        // ============================================================================
-        // 3. CLIENT-SIDE VECTOR / TF-IDF + KEYWORD OVERLAP RETRIEVAL ENGINE
-        // ============================================================================
-        const STOP_WORDS = new Set([
-            'the', 'is', 'at', 'which', 'on', 'and', 'a', 'an', 'in', 'to', 'of', 'for',
-            'with', 'as', 'by', 'that', 'this', 'it', 'from', 'or', 'are', 'be', 'was',
-            'were', 'what', 'when', 'where', 'who', 'whom', 'why', 'how', 'can', 'do',
-            'does', 'did', 'will', 'would', 'should', 'could', 'into', 'about', 'their'
-        ]);
-
-        function tokenize(text) {
-            return text
-                .toLowerCase()
-                .replace(/[^a-z0-9\.\-\/]+/g, ' ')
-                .split(/\s+/)
-                .filter(t => t.length > 1 && !STOP_WORDS.has(t));
-        }
-
-        function retrieveTopKChunks(query, k = 3) {
-            const queryTokens = tokenize(query);
-            if (queryTokens.length === 0) return knowledgeBase.slice(0, k).map(c => ({ ...c, score: 0.5 }));
-
-            // Compute Document Frequency (DF) across all chunks
-            const N = knowledgeBase.length;
-            const docFreq = {};
-            const chunkTokenLists = knowledgeBase.map(chunk => {
-                const tokens = tokenize(`${chunk.title} ${chunk.category} ${chunk.content}`);
-                const uniqueTokens = new Set(tokens);
-                uniqueTokens.forEach(tok => {
-                    docFreq[tok] = (docFreq[tok] || 0) + 1;
-                });
-                return tokens;
+        function setPromptCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-pill').forEach(btn => {
+                btn.className = 'cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all';
             });
+            event.target.className = 'cat-pill shrink-0 text-xs px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition-all font-medium';
+            renderSuggestedPrompts();
+        }
 
-            // Score each chunk using TF-IDF weighted cosine similarity + exact title/phrase boost
-            const scoredChunks = knowledgeBase.map((chunk, idx) => {
-                const tokens = chunkTokenLists[idx];
-                const tf = {};
-                tokens.forEach(t => { tf[t] = (tf[t] || 0) + 1; });
+        function renderSuggestedPrompts() {
+            const container = document.getElementById('quick-prompts-bar');
+            const prompts = CATEGORY_PROMPTS[activeCategory] || CATEGORY_PROMPTS.all;
+            container.innerHTML = prompts.map(p => `
+                <button onclick="sendSuggestedPrompt(this)" class="shrink-0 text-xs px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all active:scale-95 truncate max-w-xs">
+                    ${escapeHtml(p)}
+                </button>
+            `).join('');
+        }
 
-                let dotProduct = 0;
-                let chunkNorm = 0;
-                let queryNorm = 0;
-
-                const queryTf = {};
-                queryTokens.forEach(t => { queryTf[t] = (queryTf[t] || 0) + 1; });
-
-                // Calculate query vector norm
-                Object.keys(queryTf).forEach(term => {
-                    const idf = Math.log((N + 1) / ((docFreq[term] || 0) + 1)) + 1;
-                    const qWeight = queryTf[term] * idf;
-                    queryNorm += qWeight * qWeight;
-
-                    if (tf[term]) {
-                        const dWeight = (1 + Math.log(tf[term])) * idf;
-                        dotProduct += qWeight * dWeight;
-                    }
-                });
-
-                // Calculate document vector norm
-                Object.keys(tf).forEach(term => {
-                    const idf = Math.log((N + 1) / ((docFreq[term] || 0) + 1)) + 1;
-                    const dWeight = (1 + Math.log(tf[term])) * idf;
-                    chunkNorm += dWeight * dWeight;
-                });
-
-                let cosineSim = (chunkNorm > 0 && queryNorm > 0)
-                    ? dotProduct / (Math.sqrt(chunkNorm) * Math.sqrt(queryNorm))
-                    : 0;
-
-                // Title & Domain Keyword Boost
-                const lowerTitle = chunk.title.toLowerCase();
-                let titleBoost = 0;
-                queryTokens.forEach(qt => {
-                    if (lowerTitle.includes(qt)) titleBoost += 0.08;
-                });
-
-                const finalScore = Math.min(0.99, cosineSim + titleBoost);
-                return { ...chunk, score: finalScore };
-            });
-
-            return scoredChunks
-                .sort((a, b) => b.score - a.score)
-                .slice(0, k);
+        function sendSuggestedPrompt(btn) {
+            userInputEl.value = btn.textContent.trim();
+            handleChatSubmit(new Event('submit'));
         }
 
         // ============================================================================
-        // 4. HYBRID RAG GENERATION ENGINE (Flask /api/rag/ask + Local Grounded Synthesis)
-        // ============================================================================
-        async function generateRAGResponse(userQuery, retrievedChunks) {
-            // First: Try our active Flask Backend RAG API with SQLite knowledge base grounding!
-            try {
-                const serverResp = await fetch('/api/rag/ask', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: userQuery })
-                });
-
-                if (serverResp.ok) {
-                    const serverData = await serverResp.json();
-                    if (serverData && serverData.ai_response) {
-                        return { 
-                            text: serverData.ai_response, 
-                            mode: 'terrasense-grounded-backend',
-                            evidence: serverData.grounding_evidence,
-                            confidence: serverData.grounding_confidence
-                        };
-                    }
-                }
-            } catch (err) {
-                console.log("Local backend RAG API check skipped, falling back to client-side synthesis:", err);
-            }
-
-            // Fallback: Deterministic context-augmented synthesis grounded in retrieved chunks
-            return {
-                text: synthesizeFallbackResponse(userQuery, retrievedChunks),
-                mode: 'client-rag-synthesis'
-            };
-        }
-
-        function synthesizeFallbackResponse(query, chunks) {
-            if (!chunks || chunks.length === 0) {
-                return "No matching records were found in the current TerraSense knowledge base. Please upload relevant sensor logs or documentation via the **Knowledge Base** button above.";
-            }
-            const top = chunks[0];
-            const secondary = chunks.slice(1).filter(c => c.score > 0.12);
-
-            let response = `Based on **${top.title}** \`[${top.id}]\`, here are the grounded operational directives:\n\n${top.content}`;
-
-            if (secondary.length > 0) {
-                response += `\n\n**Additional Corroborating Guidelines:**\n`;
-                secondary.forEach(c => {
-                    response += `• **${c.title}** \`[${c.id}]\`: ${c.content}\n`;
-                });
-            }
-
-            response += `\n\n*Note: Grounded in TerraSense ML Geotechnical SOPs with Zero Hallucination enforcement.*`;
-            return response;
-        }
-
-        // ============================================================================
-        // 5. CHAT UI RENDERING & INTERACTION HANDLERS
+        // 3. CHAT ENGINE & API COMMUNICATION
         // ============================================================================
         const chatMessagesEl = document.getElementById('chat-messages');
         const userInputEl = document.getElementById('user-input');
         const sendBtnEl = document.getElementById('send-btn');
+        let chatHistory = [];
+        let allIndexedTopics = [];
 
         function handleTextareaKey(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -502,19 +460,13 @@
             }
         }
 
-        // Auto-resize textarea
         userInputEl.addEventListener('input', function () {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 128) + 'px';
         });
 
-        function sendSuggestedPrompt(btn) {
-            userInputEl.value = btn.textContent.trim();
-            handleChatSubmit(new Event('submit'));
-        }
-
         async function handleChatSubmit(e) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             const query = userInputEl.value.trim();
             if (!query) return;
 
@@ -525,22 +477,35 @@
             // 1. Render User Message
             appendUserMessage(query);
 
-            // 2. Retrieve Top-K RAG Chunks
-            const retrievedChunks = retrieveTopKChunks(query, 3);
-
-            // 3. Render Typing Indicator
+            // 2. Render Typing Indicator
             const loadingId = appendLoadingBubble();
 
-            // 4. Generate Grounded AI Response
-            const { text, mode, evidence, confidence } = await generateRAGResponse(query, retrievedChunks);
+            try {
+                // 3. Send query to backend AI API
+                const resp = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: query })
+                });
 
-            // 5. Remove Loading & Render AI Response with Source Citations
-            removeLoadingBubble(loadingId);
-            appendAssistantMessage(text, retrievedChunks, mode, evidence, confidence);
+                removeLoadingBubble(loadingId);
 
-            // Update conversation memory
-            chatHistory.push({ role: "user", parts: [{ text: query }] });
-            chatHistory.push({ role: "model", parts: [{ text: text }] });
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const aiText = data.ai_response || "No response received.";
+                    const mode = data.mode || "chatgpt-general-ai";
+                    const evidence = data.grounding_evidence || [];
+                    const confidence = data.grounding_confidence || "High";
+                    const source = data.retrieved_source || "TerraSense Multi-Domain AI";
+                    appendAssistantMessage(aiText, mode, source, confidence, evidence);
+                } else {
+                    appendAssistantMessage("⚠️ Connection issue contacting server AI engine. Please verify local server is running.", "error", "Local Server", "Offline", []);
+                }
+            } catch (err) {
+                removeLoadingBubble(loadingId);
+                console.error("Chat API error:", err);
+                appendAssistantMessage("⚠️ Error processing request: " + err.message, "error", "Network", "Offline", []);
+            }
 
             sendBtnEl.disabled = false;
             userInputEl.focus();
@@ -550,7 +515,7 @@
             const wrapper = document.createElement('div');
             wrapper.className = 'flex items-start justify-end gap-3';
             wrapper.innerHTML = `
-                <div class="bg-emerald-600/20 border border-emerald-500/40 text-slate-100 rounded-2xl rounded-tr-sm px-4 py-3 text-sm max-w-2xl leading-relaxed shadow-md">
+                <div class="bg-emerald-600/25 border border-emerald-500/40 text-slate-100 rounded-2xl rounded-tr-sm px-4 py-3 text-sm max-w-2xl leading-relaxed shadow-md">
                     ${escapeHtml(text).replace(/\n/g, '<br>')}
                 </div>
                 <div class="w-8 h-8 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 mt-0.5">
@@ -559,28 +524,80 @@
             `;
             chatMessagesEl.appendChild(wrapper);
             lucide.createIcons();
-            scrollToBottom();
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+        }
+
+        function appendAssistantMessage(text, mode, source, confidence, evidence) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex items-start gap-3 max-w-3xl';
+            const msgId = 'msg-' + Math.floor(Math.random() * 100000);
+
+            // Determine badge style
+            let badgeHtml = '';
+            if (mode === 'rag-grounded-sop') {
+                badgeHtml = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-red-500/20 text-red-300 border border-red-500/40">🚨 Grounded SOP Directive</span>`;
+            } else if (mode === 'ai-code-generation') {
+                badgeHtml = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300 border border-blue-500/40">💻 Executable Code</span>`;
+            } else if (mode === 'knowledge-base-grounded') {
+                badgeHtml = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">📚 Grounded Topic</span>`;
+            } else {
+                badgeHtml = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/40">🤖 Multi-Domain AI</span>`;
+            }
+
+            wrapper.innerHTML = `
+                <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="flex-1 bg-slate-800/85 border border-slate-700/80 rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200 leading-relaxed shadow-lg space-y-3">
+                    <div class="flex items-center justify-between gap-2 border-b border-slate-700/70 pb-2">
+                        <div class="flex items-center gap-2">
+                            ${badgeHtml}
+                            <span class="text-xs font-medium text-slate-300 truncate max-w-xs">${escapeHtml(source)}</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-emerald-400 bg-slate-900/80 px-2 py-0.5 rounded border border-slate-700/80">${escapeHtml(confidence)}</span>
+                    </div>
+
+                    <div id="${msgId}" class="markdown-body text-slate-200 space-y-2 leading-relaxed">
+                        ${renderMarkdown(text)}
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-700/50 text-xs text-slate-400">
+                        <span class="text-[11px] text-slate-500">TerraSense Intelligence Engine</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="copyAnswerText('${msgId}')" class="p-1.5 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors" title="Copy Answer">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                            </button>
+                            <button onclick="showToast('Thanks for your feedback!')" class="p-1.5 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-emerald-400 transition-colors" title="Helpful response">
+                                <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessagesEl.appendChild(wrapper);
+            lucide.createIcons();
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
         }
 
         function appendLoadingBubble() {
             const id = 'loading-' + Date.now();
             const wrapper = document.createElement('div');
             wrapper.id = id;
-            wrapper.className = 'flex items-start gap-3 max-w-3xl';
+            wrapper.className = 'flex items-start gap-3 max-w-md';
             wrapper.innerHTML = `
-                <div class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                    <i data-lucide="bot" class="w-4 h-4 text-emerald-400"></i>
+                <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
                 </div>
-                <div class="bg-slate-800/75 border border-slate-700/70 rounded-2xl rounded-tl-sm px-4 py-3.5 flex items-center gap-2">
-                    <span class="text-xs text-slate-400 font-mono mr-1">Retrieving chunks</span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 typing-dot"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 typing-dot"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 typing-dot"></span>
+                <div class="bg-slate-800/80 border border-slate-700 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 typing-dot"></span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 typing-dot"></span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 typing-dot"></span>
+                    <span class="text-xs text-slate-400 ml-1">Analyzing knowledge base...</span>
                 </div>
             `;
             chatMessagesEl.appendChild(wrapper);
             lucide.createIcons();
-            scrollToBottom();
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
             return id;
         }
 
@@ -589,247 +606,226 @@
             if (el) el.remove();
         }
 
-        function appendAssistantMessage(markdownText, sources, mode, evidence, confidence) {
-            const msgId = 'msg-' + Date.now();
-            const wrapper = document.createElement('div');
-            wrapper.className = 'flex items-start gap-3 max-w-3xl';
+        function copyAnswerText(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                navigator.clipboard.writeText(el.innerText);
+                showToast("Response copied to clipboard");
+            }
+        }
 
-            const formattedHtml = formatMarkdown(markdownText);
+        // ============================================================================
+        // 4. ADVANCED MARKDOWN & CODE BLOCK PARSER
+        // ============================================================================
+        function renderMarkdown(md) {
+            if (!md) return '';
 
-            // Build expandable Retrieved Sources pills
-            const sourcesHtml = sources.map((src, idx) => {
-                const confidencePct = Math.max(18, Math.round(src.score * 100));
-                const badgeColor = confidencePct >= 60
-                    ? 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10'
-                    : confidencePct >= 35
-                        ? 'text-amber-400 border-amber-500/40 bg-amber-500/10'
-                        : 'text-slate-300 border-slate-600 bg-slate-800';
+            // Extract and protect code blocks
+            const codeBlocks = [];
+            let processed = md.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, function (match, lang, code) {
+                const id = 'CODEBLOCK_' + codeBlocks.length;
+                codeBlocks.push({ lang: lang || 'code', code: code });
+                return id;
+            });
 
-                return `
-                    <div class="border border-slate-700/80 rounded-xl bg-slate-900/70 overflow-hidden">
-                        <button type="button" onclick="toggleSourceDetail('${msgId}-src-${idx}')" class="w-full px-3 py-2 flex items-center justify-between gap-2 text-left hover:bg-slate-800/70 transition-colors">
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 shrink-0">${escapeHtml(src.id)}</span>
-                                <span class="text-xs font-medium text-slate-200 truncate">${escapeHtml(src.title)}</span>
-                            </div>
-                            <div class="flex items-center gap-2 shrink-0">
-                                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border ${badgeColor}">${confidencePct}% match</span>
-                                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
-                            </div>
-                        </button>
-                        <div id="${msgId}-src-${idx}" class="hidden px-3 py-2.5 border-t border-slate-800 bg-slate-950/60 text-xs text-slate-300 leading-relaxed">
-                            <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-1">Category: ${escapeHtml(src.category)}</div>
-                            ${escapeHtml(src.content)}
+            // HTML escape prose
+            let html = escapeHtml(processed);
+
+            // Headers
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+
+            // Tables
+            html = html.replace(/\|(.+)\|/g, function(match) {
+                const cells = match.split('|').slice(1, -1);
+                const isHeader = cells.every(c => c.trim().match(/^-+$/));
+                if (isHeader) return '';
+                const tdType = 'td';
+                return '<tr>' + cells.map(c => `<${tdType}>${c.trim()}</${tdType}>`).join('') + '</tr>';
+            });
+            html = html.replace(/(<tr>[\s\S]*?<\/tr>)/g, '<table>$1</table>');
+
+            // Bold & Italics
+            html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em class="text-slate-300">$1</em>');
+
+            // Inline Code
+            html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-900 text-emerald-300 font-mono text-xs border border-slate-700/80">$1</code>');
+
+            // Bullet Lists
+            html = html.replace(/^\s*[\-\*•]\s+(.*)$/gm, '<div class="flex items-start gap-2 pl-1 my-1"><span class="text-emerald-400 mt-1">•</span><span>$1</span></div>');
+
+            // Numbered Lists
+            html = html.replace(/^\s*(\d+)\.\s+(.*)$/gm, '<div class="flex items-start gap-2 pl-1 my-1"><span class="text-emerald-400 font-mono text-xs mt-0.5">$1.</span><span>$2</span></div>');
+
+            // Math expressions ($...$)
+            html = html.replace(/\$([^\$]+)\$/g, '<span class="font-mono text-xs text-amber-300 bg-slate-900/90 px-1 py-0.5 rounded border border-slate-800">$1</span>');
+
+            // Paragraph Linebreaks
+            html = html.replace(/\n\n/g, '<div class="h-2"></div>').replace(/\n/g, '<br>');
+
+            // Restore Code Blocks with Copy Button
+            codeBlocks.forEach((cb, index) => {
+                const safeCode = escapeHtml(cb.code.trim());
+                const blockHtml = `
+                    <div class="relative group my-2">
+                        <div class="flex items-center justify-between bg-slate-950 px-3 py-1.5 rounded-t-xl border border-b-0 border-slate-800 text-[11px] font-mono text-slate-400">
+                            <span>${escapeHtml(cb.lang)}</span>
+                            <button onclick="navigator.clipboard.writeText(this.getAttribute('data-code')); showToast('Code copied to clipboard!')" data-code="${safeCode}" class="copy-code-btn">
+                                Copy Code
+                            </button>
                         </div>
+                        <pre class="!mt-0 !rounded-t-none"><code>${safeCode}</code></pre>
                     </div>
                 `;
-            }).join('');
+                html = html.replace('CODEBLOCK_' + index, blockHtml);
+            });
 
-            wrapper.innerHTML = `
-                <div class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                    <i data-lucide="bot" class="w-4 h-4 text-emerald-400"></i>
-                </div>
-                <div class="flex-1 min-w-0 space-y-2.5">
-                    <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200 leading-relaxed shadow-md space-y-2">
-                        ${formattedHtml}
-                    </div>
+            return html;
+        }
 
-                    <!-- Retrieved RAG Sources Accordion -->
-                    <div class="pl-1 space-y-1.5">
-                        <div class="flex items-center justify-between text-[11px] font-medium text-slate-400">
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="file-search" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Retrieved RAG Sources (${sources.length})</span>
-                            </div>
-                            ${confidence ? `<span class="text-[10.5px] text-emerald-400 font-mono">${escapeHtml(confidence)}</span>` : ''}
+        // ============================================================================
+        // 5. KNOWLEDGE BASE TOPIC MANAGER & MODAL
+        // ============================================================================
+        async function loadIndexedTopics() {
+            try {
+                const resp = await fetch('/api/knowledge-base');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data && data.topics) {
+                        allIndexedTopics = data.topics;
+                        document.getElementById('chunk-counter').textContent = `${allIndexedTopics.length} Topics Indexed`;
+                        document.getElementById('modal-chunk-count').textContent = allIndexedTopics.length;
+                        renderTopicsList(allIndexedTopics);
+                    }
+                }
+            } catch (err) {
+                console.log("Error fetching topics:", err);
+            }
+        }
+
+        function renderTopicsList(topics) {
+            const container = document.getElementById('chunks-list-container');
+            if (!topics || topics.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 p-4 text-center">No topics matching search query.</p>';
+                return;
+            }
+            container.innerHTML = topics.map(t => `
+                <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/80 space-y-1.5 hover:border-emerald-500/50 transition-colors">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-slate-900 text-emerald-400 border border-slate-700">${escapeHtml(t.id)}</span>
+                            <span class="text-xs font-semibold text-slate-100">${escapeHtml(t.title)}</span>
                         </div>
-                        <div class="grid grid-cols-1 gap-1.5">
-                            ${sourcesHtml}
-                        </div>
+                        <span class="text-[10px] text-slate-400 bg-slate-900/60 px-2 py-0.5 rounded border border-slate-800">${escapeHtml(t.category)}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(t.summary)}</p>
+                    <div class="flex justify-end pt-1">
+                        <button onclick="askTopic('${escapeHtml(t.title)}')" class="text-[11px] text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1">
+                            Ask about this topic &rarr;
+                        </button>
                     </div>
                 </div>
-            `;
-
-            chatMessagesEl.appendChild(wrapper);
+            `).join('');
             lucide.createIcons();
-            scrollToBottom();
         }
 
-        function toggleSourceDetail(elementId) {
-            const el = document.getElementById(elementId);
-            if (el) el.classList.toggle('hidden');
+        function filterIndexedTopics() {
+            const q = document.getElementById('kb-search-input').value.toLowerCase().trim();
+            if (!q) {
+                renderTopicsList(allIndexedTopics);
+                return;
+            }
+            const filtered = allIndexedTopics.filter(t => 
+                t.title.toLowerCase().includes(q) ||
+                t.category.toLowerCase().includes(q) ||
+                t.summary.toLowerCase().includes(q)
+            );
+            renderTopicsList(filtered);
         }
 
-        function clearChat() {
-            chatHistory = [];
-            const firstChild = chatMessagesEl.firstElementChild;
-            chatMessagesEl.innerHTML = '';
-            if (firstChild) chatMessagesEl.appendChild(firstChild);
-            showToast('Chat history cleared');
+        function askTopic(title) {
+            toggleKBModal(false);
+            userInputEl.value = `Explain ${title}`;
+            handleChatSubmit(new Event('submit'));
         }
 
-        function scrollToBottom() {
-            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-        }
-
-        // ============================================================================
-        // 6. KNOWLEDGE BASE INGESTION, CHUNKING & ANTIGRAVITY EMBED HELPER
-        // ============================================================================
         function toggleKBModal(show) {
             const modal = document.getElementById('kb-modal');
             if (show) {
                 modal.classList.remove('hidden');
-                renderIndexedChunksList();
                 populateEmbedCodeBox();
+                lucide.createIcons();
             } else {
                 modal.classList.add('hidden');
             }
         }
 
         function switchKBTab(tabName) {
-            ['ingest', 'chunks', 'embed'].forEach(t => {
-                document.getElementById(`kb-tab-${t}`).classList.toggle('hidden', t !== tabName);
+            ['topics', 'ingest', 'embed'].forEach(t => {
                 const btn = document.getElementById(`tab-btn-${t}`);
-                if (t === tabName) {
-                    btn.classList.add('border-emerald-400', 'text-emerald-400');
-                    btn.classList.remove('border-transparent', 'text-slate-400');
-                } else {
-                    btn.classList.remove('border-emerald-400', 'text-emerald-400');
-                    btn.classList.add('border-transparent', 'text-slate-400');
+                const panel = document.getElementById(`kb-tab-${t}`);
+                if (btn && panel) {
+                    if (t === tabName) {
+                        btn.className = 'pb-2.5 border-b-2 border-emerald-400 text-emerald-400 transition-colors';
+                        panel.classList.remove('hidden');
+                    } else {
+                        btn.className = 'pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition-colors';
+                        panel.classList.add('hidden');
+                    }
                 }
             });
-            if (tabName === 'chunks') renderIndexedChunksList();
-            if (tabName === 'embed') populateEmbedCodeBox();
         }
 
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            document.getElementById('file-upload-label').textContent = file.name;
-            if (!document.getElementById('doc-title-input').value.trim()) {
-                document.getElementById('doc-title-input').value = file.name.replace(/\.[^/.]+$/, "");
+        function ingestCustomDocument() {
+            const title = document.getElementById('doc-title-input').value.trim() || 'Custom Note';
+            const content = document.getElementById('doc-content-input').value.trim();
+            if (!content) {
+                showToast("Please enter text or notes to save");
+                return;
             }
+            allIndexedTopics.unshift({
+                id: 'CUSTOM-' + Math.floor(Math.random() * 900 + 100),
+                title: title,
+                category: 'User Ingested Notes',
+                summary: content.slice(0, 140) + '...',
+                content: content
+            });
+            document.getElementById('doc-title-input').value = '';
+            document.getElementById('doc-content-input').value = '';
+            renderTopicsList(allIndexedTopics);
+            document.getElementById('modal-chunk-count').textContent = allIndexedTopics.length;
+            document.getElementById('chunk-counter').textContent = `${allIndexedTopics.length} Topics Indexed`;
+            switchKBTab('topics');
+            showToast(`Note "${title}" added to Knowledge Base!`);
+        }
 
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            document.getElementById('file-upload-label').textContent = file.name;
             const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('doc-content-input').value = e.target.result;
-                showToast(`Loaded ${file.name} (${Math.round(file.size / 1024 * 10) / 10} KB)`);
+            reader.onload = function(evt) {
+                document.getElementById('doc-content-input').value = evt.target.result;
+                if (!document.getElementById('doc-title-input').value) {
+                    document.getElementById('doc-title-input').value = file.name.replace(/\.[^/.]+$/, "");
+                }
             };
             reader.readAsText(file);
         }
 
-        function chunkText(text, maxChunkSize = 480, overlap = 80) {
-            const cleanText = text.replace(/\r\n/g, '\n').trim();
-            if (cleanText.length <= maxChunkSize) return [cleanText];
-
-            const chunks = [];
-            let start = 0;
-            while (start < cleanText.length) {
-                let end = start + maxChunkSize;
-                if (end < cleanText.length) {
-                    const lastPeriod = cleanText.lastIndexOf('.', end);
-                    const lastNewline = cleanText.lastIndexOf('\n', end);
-                    const breakPoint = Math.max(lastPeriod, lastNewline);
-                    if (breakPoint > start + maxChunkSize * 0.5) {
-                        end = breakPoint + 1;
-                    }
-                }
-                chunks.push(cleanText.slice(start, end).trim());
-                start = end - overlap;
-                if (start < 0) start = 0;
-                if (end >= cleanText.length) break;
-            }
-            return chunks.filter(c => c.length > 0);
-        }
-
-        function ingestCustomDocument() {
-            const title = document.getElementById('doc-title-input').value.trim() || 'Custom Geotechnical Log';
-            const rawContent = document.getElementById('doc-content-input').value.trim();
-
-            if (!rawContent) {
-                showToast('Please paste text or upload a file first');
-                return;
-            }
-
-            const textChunks = chunkText(rawContent);
-            const prefix = 'CUSTOM-' + Math.floor(100 + Math.random() * 900);
-
-            textChunks.forEach((chunkStr, index) => {
-                knowledgeBase.unshift({
-                    id: `${prefix}-${index + 1}`,
-                    title: textChunks.length > 1 ? `${title} (Part ${index + 1}/${textChunks.length})` : title,
-                    category: 'User Ingested Telemetry',
-                    content: chunkStr
-                });
-            });
-
-            updateChunkCounters();
-            document.getElementById('doc-title-input').value = '';
-            document.getElementById('doc-content-input').value = '';
-            document.getElementById('file-upload-label').textContent = 'Choose File to Auto-Chunk';
-            document.getElementById('ingest-feedback').textContent = `✓ Indexed ${textChunks.length} chunk(s) into active RAG store!`;
-
-            setTimeout(() => {
-                document.getElementById('ingest-feedback').textContent = '';
-            }, 4000);
-
-            showToast(`Added ${textChunks.length} chunk(s) to Knowledge Base`);
-        }
-
-        function resetDefaultKB() {
-            knowledgeBase = [...DEFAULT_KNOWLEDGE_BASE];
-            updateChunkCounters();
-            renderIndexedChunksList();
-            showToast('Restored default TerraSense knowledge base');
-        }
-
-        function deleteChunk(id) {
-            if (knowledgeBase.length <= 1) {
-                showToast('At least 1 knowledge chunk must remain active');
-                return;
-            }
-            knowledgeBase = knowledgeBase.filter(c => c.id !== id);
-            updateChunkCounters();
-            renderIndexedChunksList();
-        }
-
-        function updateChunkCounters() {
-            document.getElementById('chunk-counter').textContent = `${knowledgeBase.length} Chunks Indexed`;
-            document.getElementById('modal-chunk-count').textContent = knowledgeBase.length;
-        }
-
-        function renderIndexedChunksList() {
-            const container = document.getElementById('chunks-list-container');
-            container.innerHTML = knowledgeBase.map(chunk => `
-                <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/80 flex items-start justify-between gap-3">
-                    <div class="min-w-0 space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-900 text-emerald-400 border border-slate-700">${escapeHtml(chunk.id)}</span>
-                            <span class="text-xs font-semibold text-slate-100 truncate">${escapeHtml(chunk.title)}</span>
-                            <span class="text-[10px] text-slate-400 hidden sm:inline">• ${escapeHtml(chunk.category)}</span>
-                        </div>
-                        <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">${escapeHtml(chunk.content)}</p>
-                    </div>
-                    <button onclick="deleteChunk('${chunk.id}')" class="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-slate-900 transition-colors shrink-0" title="Remove Chunk">
-                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                    </button>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
         function populateEmbedCodeBox() {
             const currentBaseUrl = window.location.href.split('?')[0];
-            const embedSnippet = `<!-- TerraSense ML Floating RAG Chatbot Widget (Add before </body>) -->
-<div id="terrasense-rag-widget">
+            const embedSnippet = `<!-- TerraSense ML Floating AI Chatbot Widget -->
+<div id="terrasense-ai-widget">
   <button onclick="const f=document.getElementById('ts-rag-frame');f.style.display=f.style.display==='none'?'block':'none'"
-    style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#10b981;color:#0b1120;font-weight:600;padding:12px 18px;border-radius:9999px;border:none;box-shadow:0 10px 25px rgba(0,0,0,0.4);cursor:pointer;font-family:sans-serif;">
-    🪨 TerraSense AI Assistant
+    style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#10b981;color:#0b1120;font-weight:700;padding:12px 18px;border-radius:9999px;border:none;box-shadow:0 10px 25px rgba(0,0,0,0.4);cursor:pointer;font-family:sans-serif;">
+    🤖 TerraSense AI Assistant
   </button>
   <iframe id="ts-rag-frame" src="${currentBaseUrl}?embed=true"
-    style="display:none;position:fixed;bottom:76px;right:20px;width:400px;max-width:92vw;height:600px;max-height:80vh;border:1px solid #334155;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.6);z-index:9999;background:#0b1120;"
-    title="TerraSense RAG AI Chatbot">
+    style="display:none;position:fixed;bottom:76px;right:20px;width:440px;max-width:92vw;height:620px;max-height:80vh;border:1px solid #334155;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.6);z-index:9999;background:#0b1120;"
+    title="TerraSense AI Assistant">
   </iframe>
 </div>`;
             document.getElementById('embed-code-box').value = embedSnippet;
@@ -846,29 +842,9 @@
             }, 2500);
         }
 
-        // ============================================================================
-        // 7. UTILITIES (MARKDOWN FORMATTER, XSS ESCAPING, TOAST)
-        // ============================================================================
-        function escapeHtml(str) {
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
-        }
-
-        function formatMarkdown(text) {
-            let safe = escapeHtml(text);
-            // Bold **text**
-            safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
-            // Inline code `text`
-            safe = safe.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-900 text-emerald-300 font-mono text-xs border border-slate-700/80">$1</code>');
-            // Bullet points
-            safe = safe.replace(/^\s*[\-\*•]\s+(.*)$/gm, '<div class="flex items-start gap-2 pl-1"><span class="text-emerald-400 mt-1">•</span><span>$1</span></div>');
-            // Line breaks
-            safe = safe.replace(/\n\n/g, '<div class="h-2"></div>').replace(/\n/g, '<br>');
-            return safe;
+        function clearChat() {
+            chatMessagesEl.innerHTML = '';
+            showToast('Chat history cleared');
         }
 
         function showToast(msg) {
@@ -878,10 +854,22 @@
             setTimeout(() => toast.classList.add('hidden'), 2800);
         }
 
-        // Initialize Lucide icons on page load
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // ============================================================================
+        // 6. INITIALIZATION
+        // ============================================================================
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            updateChunkCounters();
+            renderSuggestedPrompts();
+            loadIndexedTopics();
         });
     </script>
 </body>

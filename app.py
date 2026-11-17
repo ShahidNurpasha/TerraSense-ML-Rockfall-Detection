@@ -39,6 +39,7 @@ from emergency_response import (
     save_or_update_protocol
 )
 from model import train_and_evaluate_models
+from ai_chatbot_engine import process_chat_query, get_all_indexed_topics
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_PROTOCOLS_DIR = os.path.join(BASE_DIR, 'uploads', 'protocols')
@@ -678,11 +679,12 @@ def api_protocol(zone_id):
     return jsonify(notice)
 
 
+@app.route('/api/chat', methods=['POST'])
 @app.route('/api/rag/ask', methods=['POST'])
 def api_rag_ask():
-    """JSON API for RAG AI Question Answering & Grounded Directive Generation."""
+    """JSON API for RAG AI Question Answering & ChatGPT-Style Conversational Intelligence."""
     data = request.get_json(silent=True) or request.form or {}
-    query = (data.get('query') or data.get('rag_query') or '').strip()
+    query = (data.get('query') or data.get('rag_query') or data.get('message') or '').strip()
     zone_id = data.get('zone_id')
     telemetry = data.get('sensor_telemetry')
     if not query:
@@ -692,8 +694,20 @@ def api_rag_ask():
             zone_id = int(zone_id)
     except (ValueError, TypeError):
         zone_id = None
-    result = generate_rag_response(query, zone_id=zone_id, sensor_telemetry=telemetry)
+
+    result = process_chat_query(query, zone_id=zone_id, sensor_telemetry=telemetry)
     return jsonify(result)
+
+
+@app.route('/api/knowledge-base', methods=['GET'])
+def api_knowledge_base():
+    """Returns all indexed knowledge topics across all domains."""
+    topics = get_all_indexed_topics()
+    return jsonify({
+        'success': True,
+        'topics': topics,
+        'total_indexed': len(topics)
+    })
 
 
 if __name__ == '__main__':
