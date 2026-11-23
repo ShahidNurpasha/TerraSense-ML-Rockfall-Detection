@@ -64,19 +64,19 @@ https://github.com/ShahidNurpasha/cse276.git
 
 LIVE DEPLOYMENT LINK:
 
-https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com
+https://terra-sense-ml-rockfall-detection.vercel.app/
 
 
 
 INTERACTIVE RAG AI ASSISTANT CHATBOT:
 
-https://untainted-share-confront.ngrok-free.dev/chatbot
+https://terra-sense-ml-rockfall-detection.vercel.app/chatbot
 
 
 
 GROUNDED SAFETY PROTOCOLS & RESPONSE COPILOT:
 
-https://untainted-share-confront.ngrok-free.dev/protocols
+https://terra-sense-ml-rockfall-detection.vercel.app/protocols
 
 
 

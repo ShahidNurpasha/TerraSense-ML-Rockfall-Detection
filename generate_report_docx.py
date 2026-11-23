@@ -74,8 +74,8 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         ("Project Group", "Group #9 (Course Outcomes: CO3, CO4, CO5) | Section: K3P25IL"),
         ("Student Investigator 1", "Nurpasha Shahid | Reg No: 12513245 | Roll No: 05 (RE3F25ILA05)"),
         ("Student Investigator 2", "Banala Yaswanth | Reg No: 12501181 | Roll No: 27 (RE3F25ILA27)"),
-        ("Live Web Application", "https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com"),
-        ("RAG Chatbot Assistant", "https://untainted-share-confront.ngrok-free.dev/chatbot"),
+        ("Live Web Application", "https://terra-sense-ml-rockfall-detection.vercel.app/"),
+        ("RAG Chatbot Assistant", "https://terra-sense-ml-rockfall-detection.vercel.app/chatbot"),
         ("Local Application Server", "http://127.0.0.1:5000/"),
         ("Source Code Repository", "https://github.com/ShahidNurpasha/cse276.git")
     ]
@@ -119,7 +119,7 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         "It retrieves only administrator-verified standard operating procedures (SOPs) from SQLite. When unverified, it explicitly refuses to invent "
         "synthetic evacuation routes or assembly points and triggers an official safety contingency directive citing emergency services (112).\n\n"
         "The complete system is implemented as a lightweight, production-ready Python Flask web application, verified through a 7-step automated "
-        "test suite, and deployed live online at https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com (with local server at http://127.0.0.1:5000/)."
+        "test suite, and deployed live online at https://terra-sense-ml-rockfall-detection.vercel.app/ (with local server at http://127.0.0.1:5000/)."
     )
 
     # ==========================================
@@ -322,7 +322,7 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         "• test_07_rag_generative_response_synthesis: Validates RAG natural language generation, REST API endpoint, and UI integration.\n\n"
         "2. Online Web Application Deployment:\n"
         "The application is served live online at:\n"
-        "https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com\n"
+        "https://terra-sense-ml-rockfall-detection.vercel.app/\n"
         "Additionally, full offline local autonomy is supported via http://127.0.0.1:5000/ (run_app.bat).\n\n"
         "3. Source Code Version Control:\n"
         "All code, commits, and assets are tracked on GitHub at:\n"

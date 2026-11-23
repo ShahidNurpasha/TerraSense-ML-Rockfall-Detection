@@ -36,13 +36,13 @@ TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
   https://github.com/ShahidNurpasha/cse276.git
 
 - Live Web Application Deployment:
-  https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com
+  https://terra-sense-ml-rockfall-detection.vercel.app/
 
 - Interactive RAG AI Chatbot Assistant:
-  https://untainted-share-confront.ngrok-free.dev/chatbot
+  https://terra-sense-ml-rockfall-detection.vercel.app/chatbot
 
 - Grounded Safety Protocols & Emergency Coordination:
-  https://untainted-share-confront.ngrok-free.dev/protocols
+  https://terra-sense-ml-rockfall-detection.vercel.app/protocols
 
 - Local Application Server:
   http://127.0.0.1:5000/ (or http://127.0.0.1:5000/protocols)
