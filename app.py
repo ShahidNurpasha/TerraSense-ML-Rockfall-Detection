@@ -42,13 +42,28 @@ from model import train_and_evaluate_models
 from ai_chatbot_engine import process_chat_query, get_all_indexed_topics
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_PROTOCOLS_DIR = os.path.join(BASE_DIR, 'uploads', 'protocols')
-DATA_DIR = os.path.join(BASE_DIR, 'data')
-MODELS_DIR = os.path.join(BASE_DIR, 'models')
 
-os.makedirs(UPLOAD_PROTOCOLS_DIR, exist_ok=True)
-os.makedirs(DATA_DIR, exist_ok=True)
-os.makedirs(MODELS_DIR, exist_ok=True)
+if os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
+    UPLOAD_PROTOCOLS_DIR = os.path.join('/tmp', 'uploads', 'protocols')
+    DATA_DIR = os.path.join('/tmp', 'data')
+    MODELS_DIR = os.path.join(BASE_DIR, 'models')
+else:
+    UPLOAD_PROTOCOLS_DIR = os.path.join(BASE_DIR, 'uploads', 'protocols')
+    DATA_DIR = os.path.join(BASE_DIR, 'data')
+    MODELS_DIR = os.path.join(BASE_DIR, 'models')
+
+try:
+    os.makedirs(UPLOAD_PROTOCOLS_DIR, exist_ok=True)
+except OSError:
+    pass
+try:
+    os.makedirs(DATA_DIR, exist_ok=True)
+except OSError:
+    pass
+try:
+    os.makedirs(MODELS_DIR, exist_ok=True)
+except OSError:
+    pass
 
 app = Flask(__name__)
 app.secret_key = 'rockfall-decision-support-secret-key-2025'

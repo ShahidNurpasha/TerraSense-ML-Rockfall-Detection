@@ -183,6 +183,7 @@ def build_final_zip(zip_filename, inner_folder_name="CSE276_P09_12513245_1250118
         "database.py",
         "rockfall.db",
         "Procfile",
+        "vercel.json",
         "requirements.txt",
         "run_app.bat",
         "test_system.py",
@@ -190,6 +191,7 @@ def build_final_zip(zip_filename, inner_folder_name="CSE276_P09_12513245_1250118
     ]
 
     code_dirs = [
+        "api",
         "templates",
         "static",
         "data",

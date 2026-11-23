@@ -1,0 +1,15 @@
+.git
+.github
+*.zip
+*.docx
+*.pptx
+*.pdf
+test_*.py
+__pycache__
+*.bat
+.system_generated
+SUBMISSION_LINKS_AND_DETAILS.txt
+package_ums_submission.py
+create_submission_package.py
+generate_presentation.py
+generate_report_docx.py

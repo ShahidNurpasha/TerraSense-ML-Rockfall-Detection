@@ -13,14 +13,32 @@ This module manages all database operations for:
 
 import sqlite3
 import os
+import shutil
 from datetime import datetime, timedelta
 import random
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'rockfall.db')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ORIGINAL_DB_PATH = os.path.join(BASE_DIR, 'rockfall.db')
+
+# On Vercel / serverless platforms, root directory is read-only.
+# We use /tmp for SQLite to allow reading & writing without errors.
+if os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
+    DB_PATH = '/tmp/rockfall.db'
+else:
+    DB_PATH = ORIGINAL_DB_PATH
 
 
 def get_db_connection():
     """Returns a SQLite connection with row factory enabled for dictionary-like access."""
+    if (os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME')) and not os.path.exists(DB_PATH):
+        try:
+            if os.path.exists(ORIGINAL_DB_PATH):
+                shutil.copy2(ORIGINAL_DB_PATH, DB_PATH)
+            else:
+                init_db()
+        except Exception as e:
+            print(f"[DB Warning] Error copying SQLite db to /tmp: {e}")
+
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
