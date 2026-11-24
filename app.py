@@ -151,10 +151,6 @@ def dashboard():
     summary = get_dashboard_summary()
     return render_template('dashboard.html', summary=summary)
 
-@app.route('/api/debug-env')
-def debug_env():
-    return jsonify({k: str(v) for k, v in request.environ.items() if any(w in k for w in ('PATH', 'URI', 'URL', 'MATCH', 'ROUTE', 'VERCEL', 'RAW'))})
-
 
 @app.route('/prediction', methods=['GET', 'POST'])
 def prediction():

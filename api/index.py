@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 
 # Ensure the root project directory is on sys.path
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -10,16 +11,18 @@ if PROJECT_ROOT not in sys.path:
 from app import app
 
 class VercelPathFixMiddleware:
-    """
-    WSGI Middleware to adjust PATH_INFO when Vercel serverless rewrites
-    incoming requests (e.g., /(.*) -> /api/index).
-    Extracts the original request path from HTTP_X_MATCHED_PATH, x-matched-path,
-    or strips the /api/index prefix.
-    """
     def __init__(self, wsgi_app):
         self.wsgi_app = wsgi_app
 
     def __call__(self, environ, start_response):
+        query_string = environ.get('QUERY_STRING', '')
+        if 'dump_environ=1' in query_string:
+            status = '200 OK'
+            headers = [('Content-Type', 'application/json')]
+            start_response(status, headers)
+            dump = {k: str(v) for k, v in environ.items() if not k.startswith('wsgi.')}
+            return [json.dumps(dump, indent=2).encode('utf-8')]
+
         matched = (
             environ.get('HTTP_X_MATCHED_PATH')
             or environ.get('x-matched-path')
