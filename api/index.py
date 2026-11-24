@@ -1,6 +1,6 @@
 import os
 import sys
-import json
+import urllib.parse
 
 # Ensure the root project directory is on sys.path
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -11,25 +11,23 @@ if PROJECT_ROOT not in sys.path:
 from app import app
 
 class VercelPathFixMiddleware:
+    """
+    WSGI Middleware to extract original request path and clean query string
+    from Vercel rewrites (destination: /api/index?__vercel_path=$1).
+    """
     def __init__(self, wsgi_app):
         self.wsgi_app = wsgi_app
 
     def __call__(self, environ, start_response):
-        query_string = environ.get('QUERY_STRING', '')
-        if 'dump_environ=1' in query_string:
-            status = '200 OK'
-            headers = [('Content-Type', 'application/json')]
-            start_response(status, headers)
-            dump = {k: str(v) for k, v in environ.items() if not k.startswith('wsgi.')}
-            return [json.dumps(dump, indent=2).encode('utf-8')]
-
-        matched = (
-            environ.get('HTTP_X_MATCHED_PATH')
-            or environ.get('x-matched-path')
-            or environ.get('HTTP_X_FORWARDED_PATH')
-        )
-        if matched:
-            environ['PATH_INFO'] = matched
+        qs = environ.get('QUERY_STRING', '')
+        if '__vercel_path' in qs:
+            params = urllib.parse.parse_qs(qs, keep_blank_values=True)
+            path_val = params.pop('__vercel_path', [''])[0]
+            if path_val:
+                environ['PATH_INFO'] = '/' + path_val.lstrip('/')
+            else:
+                environ['PATH_INFO'] = '/'
+            environ['QUERY_STRING'] = urllib.parse.urlencode(params, doseq=True)
         else:
             path_info = environ.get('PATH_INFO', '')
             if path_info in ('/api/index', '/api/index/'):
