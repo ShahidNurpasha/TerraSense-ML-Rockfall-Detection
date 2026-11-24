@@ -58,7 +58,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # 1. Prepare GITHUB REPO LINK AND LIVE DEPLOYMENT LINK.txt
 links_content = """GITHUB REPO LINK:
 
-https://github.com/ShahidNurpasha/cse276.git
+https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git
 
 
 

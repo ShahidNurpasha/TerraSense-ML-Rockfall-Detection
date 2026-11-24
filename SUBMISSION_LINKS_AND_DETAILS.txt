@@ -33,7 +33,7 @@ TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
 3. PROJECT LINKS & APPLICATION URLS:
 --------------------------------------------------------------------------------
 - GitHub Source Code Repository:
-  https://github.com/ShahidNurpasha/cse276.git
+  https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git
 
 - Live Web Application Deployment:
   https://terra-sense-ml-rockfall-detection.vercel.app/

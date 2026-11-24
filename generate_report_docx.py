@@ -77,7 +77,7 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         ("Live Web Application", "https://terra-sense-ml-rockfall-detection.vercel.app/"),
         ("RAG Chatbot Assistant", "https://terra-sense-ml-rockfall-detection.vercel.app/chatbot"),
         ("Local Application Server", "http://127.0.0.1:5000/"),
-        ("Source Code Repository", "https://github.com/ShahidNurpasha/cse276.git")
+        ("Source Code Repository", "https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git")
     ]
     meta_table = doc.add_table(rows=len(meta_data), cols=2)
     meta_table.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -326,7 +326,7 @@ def create_report(output_path="PROJECT_REPORT.docx"):
         "Additionally, full offline local autonomy is supported via http://127.0.0.1:5000/ (run_app.bat).\n\n"
         "3. Source Code Version Control:\n"
         "All code, commits, and assets are tracked on GitHub at:\n"
-        "https://github.com/ShahidNurpasha/cse276.git"
+        "https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git"
     )
 
     # ==========================================

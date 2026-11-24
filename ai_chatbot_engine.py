@@ -96,7 +96,7 @@ The **TerraSense ML** project was researched, designed, and developed by:
 - **Assigned Outcomes:** CO3, CO4, CO5
 - **Project Group:** Group #9 (`P09`)
 - **Institution:** Lovely Professional University (LPU), Punjab, India
-- **Repository:** `https://github.com/ShahidNurpasha/cse276.git`"""
+- **Repository:** `https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git`"""
     },
     {
         "id": "TS-FOUR-PILLARS",
