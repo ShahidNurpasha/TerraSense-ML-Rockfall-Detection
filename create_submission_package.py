@@ -56,46 +56,57 @@ import zipfile
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # 1. Prepare GITHUB REPO LINK AND LIVE DEPLOYMENT LINK.txt
-links_content = """GITHUB REPO LINK:
+links_content = """================================================================================
+TERRASENSE ML: ROCKFALL EARLY WARNING & RESPONSE COORDINATION SYSTEM
+CSE276 CAPSTONE PROJECT — UMS SUBMISSION LINKS & ACADEMIC CREDENTIALS
+================================================================================
 
+🌐 Live Web Application URL: https://terra-sense-ml-rockfall-detection.vercel.app/
+🤖 Interactive RAG AI Chatbot Assistant: https://terra-sense-ml-rockfall-detection.vercel.app/chatbot
+📋 Grounded Safety Protocols & Response: https://terra-sense-ml-rockfall-detection.vercel.app/protocols
+🐙 GitHub Source Code Repository: https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection
+
+--------------------------------------------------------------------------------
+1. OFFICIAL PROJECT LINKS:
+--------------------------------------------------------------------------------
+
+GITHUB REPO LINK:
 https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git
 
-
-
 LIVE DEPLOYMENT LINK:
-
 https://terra-sense-ml-rockfall-detection.vercel.app/
 
-
-
 INTERACTIVE RAG AI ASSISTANT CHATBOT:
-
 https://terra-sense-ml-rockfall-detection.vercel.app/chatbot
 
-
-
 GROUNDED SAFETY PROTOCOLS & RESPONSE COPILOT:
-
 https://terra-sense-ml-rockfall-detection.vercel.app/protocols
 
-
-
-LOCAL APPLICATION SERVER (OFFLINE EXECUTION):
-
+LOCAL APPLICATION SERVER (OFFLINE 1-CLICK EXECUTION):
 http://127.0.0.1:5000/
 http://127.0.0.1:5000/protocols
 http://127.0.0.1:5000/chatbot
 
+--------------------------------------------------------------------------------
+2. STUDENT INVESTIGATOR CREDENTIALS:
+--------------------------------------------------------------------------------
 
+1. Nurpasha Shahid
+   Registration Number: 12513245
+   Roll Number: 05 (RE3F25ILA05)
+   Section: K3P25IL
 
-STUDENT INVESTIGATORS:
-
-1. Nurpasha Shahid (Registration No. 12513245, Roll No. 05, Section K3P25IL)
-2. Banala Yaswanth (Registration No. 12501181, Roll No. 27, Section K3P25IL)
+2. Banala Yaswanth
+   Registration Number: 12501181
+   Roll Number: 27 (RE3F25ILA27)
+   Section: K3P25IL
 
 Course: CSE276 (Artificial Intelligence Foundations) / Course Record ID: SDE25071
 Project Group: Group #9 (P09)
-University: Lovely Professional University (LPU)
+Academic Program: B.Tech Computer Science and Engineering
+Institution: Lovely Professional University (LPU)
+Submission Deadline: 15 November 2026
+================================================================================
 """
 
 req_dir = os.path.join(BASE_DIR, 'CODE_BASE_REQUIREMENTS_TMP')
@@ -232,6 +243,16 @@ def build_final_zip(zip_filename, inner_folder_name="CSE276_P09_12513245_1250118
                 os.path.join(BASE_DIR, "PROJECT_REPORT.docx"),
                 f"{inner_folder_name}/PROJECT_REPORT.docx"
             )
+
+        # Root Links & Documentation
+        z.write(
+            os.path.join(req_dir, "GITHUB REPO LINK AND LIVE DEPLOYMENT LINK.txt"),
+            f"{inner_folder_name}/GITHUB REPO LINK AND LIVE DEPLOYMENT LINK.txt"
+        )
+        z.write(
+            os.path.join(BASE_DIR, "README.md"),
+            f"{inner_folder_name}/README.md"
+        )
 
         # 2. CODE BASE REQUERIMENTS
         z.write(
