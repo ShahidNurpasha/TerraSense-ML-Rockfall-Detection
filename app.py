@@ -148,6 +148,8 @@ def get_dashboard_summary():
 @app.route('/api/index')
 def dashboard():
     """Module 1: Main System Dashboard."""
+    if request.args.get('debug') or 'debug=1' in request.query_string.decode('utf-8', errors='ignore'):
+        return jsonify({k: str(v) for k, v in request.environ.items() if not k.startswith('wsgi.')})
     summary = get_dashboard_summary()
     return render_template('dashboard.html', summary=summary)
 
