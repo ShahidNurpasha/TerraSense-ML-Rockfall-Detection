@@ -164,7 +164,7 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
     foot = s1.shapes.add_textbox(Inches(1.0), Inches(6.45), Inches(11.333), Inches(0.7))
     tf = foot.text_frame
     p = tf.paragraphs[0]
-    p.text = "Course: SDE 2025  |  Record ID: SDE25071  |  Outcomes: CO3, CO4, CO5  |  Section: K3P25IL\nLive Web App: https://terra-sense-ml-rockfall-detection.vercel.app/  |  GitHub: github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection"
+    p.text = "Course: SDE 2025  |  Record ID: SDE25071  |  Outcomes: CO3, CO4, CO5  |  Section: K3P25IL\nLive Web App: https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com  |  GitHub: github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection"
     p.font.size = Pt(11)
     p.font.bold = True
     p.font.color.rgb = RGBColor(148, 163, 184)
@@ -808,10 +808,11 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
     p.font.color.rgb = NAVY_DARK
 
     cloud_points = [
-        ("Live URL:", "https://terra-sense-ml-rockfall-detection.vercel.app/"),
-        ("Interactive RAG AI Chatbot:", "https://terra-sense-ml-rockfall-detection.vercel.app/chatbot"),
-        ("RAG Protocols & Copilot:", "https://terra-sense-ml-rockfall-detection.vercel.app/protocols"),
+        ("Live URL:", "https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com"),
+        ("Interactive RAG AI Chatbot:", "https://untainted-share-confront.ngrok-free.dev/chatbot"),
+        ("RAG Protocols & Copilot:", "https://untainted-share-confront.ngrok-free.dev/protocols"),
         ("Source Code Repository:", "https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git"),
+        ("Alternative Cloud Mirror:", "https://terra-sense-ml-rockfall-detection.vercel.app/"),
         ("Local 1-Click Execution:", "Included 'run_app.bat' for offline Windows execution (http://127.0.0.1:5000)."),
         ("Verification Status:", "All 7 automated unit tests passing (100% pass rate).")
     ]
@@ -919,8 +920,8 @@ def build_presentation(output_path="ROCKFALL_EARLY_WARNING_PRESENTATION.pptx"):
 
     p = tf16.add_paragraph()
     p.text = (
-        "\n🌐 Live Deployment: https://terra-sense-ml-rockfall-detection.vercel.app/\n"
-        "🤖 RAG AI Assistant Chatbot: https://terra-sense-ml-rockfall-detection.vercel.app/chatbot\n"
+        "\n🌐 Live Deployment: https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com\n"
+        "🤖 RAG AI Assistant Chatbot: https://untainted-share-confront.ngrok-free.dev/chatbot\n"
         "💻 GitHub Repository: https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git\n"
         "🎓 Student Investigators: Nurpasha Shahid (12513245) & Banala Yaswanth (12501181) | Section: K3P25IL"
     )

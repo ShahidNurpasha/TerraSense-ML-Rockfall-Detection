@@ -36,12 +36,17 @@ TERRASENSE ML — ACADEMIC CAPSTONE PROJECT UMS SUBMISSION
   https://github.com/ShahidNurpasha/TerraSense-ML-Rockfall-Detection.git
 
 - Live Web Application Deployment:
-  https://terra-sense-ml-rockfall-detection.vercel.app/
+  https://untainted-share-confront.ngrok-free.dev/?utm_source=chatgpt.com
 
 - Interactive RAG AI Chatbot Assistant:
-  https://terra-sense-ml-rockfall-detection.vercel.app/chatbot
+  https://untainted-share-confront.ngrok-free.dev/chatbot
 
 - Grounded Safety Protocols & Emergency Coordination:
+  https://untainted-share-confront.ngrok-free.dev/protocols
+
+- Alternative Production Mirror (Vercel):
+  https://terra-sense-ml-rockfall-detection.vercel.app/
+  https://terra-sense-ml-rockfall-detection.vercel.app/chatbot
   https://terra-sense-ml-rockfall-detection.vercel.app/protocols
 
 - Local Application Server:
