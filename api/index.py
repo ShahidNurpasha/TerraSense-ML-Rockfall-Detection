@@ -1,8 +1,6 @@
 import os
 import sys
-import urllib.parse
 
-# Ensure the root project directory is on sys.path
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
 if PROJECT_ROOT not in sys.path:
@@ -11,31 +9,24 @@ if PROJECT_ROOT not in sys.path:
 from app import app
 
 class VercelPathFixMiddleware:
-    """
-    WSGI Middleware to extract original request path and clean query string
-    from Vercel rewrites (destination: /api/index?__vercel_path=$1).
-    """
     def __init__(self, wsgi_app):
         self.wsgi_app = wsgi_app
 
     def __call__(self, environ, start_response):
-        qs = environ.get('QUERY_STRING', '')
-        if '__vercel_path' in qs:
-            params = urllib.parse.parse_qs(qs, keep_blank_values=True)
-            path_val = params.pop('__vercel_path', [''])[0]
-            if path_val:
-                environ['PATH_INFO'] = '/' + path_val.lstrip('/')
-            else:
-                environ['PATH_INFO'] = '/'
-            environ['QUERY_STRING'] = urllib.parse.urlencode(params, doseq=True)
-        else:
-            path_info = environ.get('PATH_INFO', '')
-            if path_info in ('/api/index', '/api/index/'):
-                environ['PATH_INFO'] = '/'
-            elif path_info.startswith('/api/index/'):
-                environ['PATH_INFO'] = path_info[len('/api/index'):]
+        debug_info = {
+            k: str(v) for k, v in environ.items()
+            if any(w in k.upper() for w in ('PATH', 'URI', 'URL', 'MATCH', 'ROUTE', 'VERCEL', 'ORIGINAL', 'FORWARD', 'REQUEST'))
+        }
 
-        return self.wsgi_app(environ, start_response)
+        def custom_start_response(status, response_headers, exc_info=None):
+            response_headers.append(('X-Debug-Vercel-Keys', ','.join(sorted(debug_info.keys()))[:200]))
+            for k, v in list(debug_info.items())[:12]:
+                clean_k = 'X-Env-' + k.replace('_', '-')[:30]
+                clean_v = str(v).replace('\n', ' ')[:100]
+                response_headers.append((clean_k, clean_v))
+            return start_response(status, response_headers, exc_info)
+
+        return self.wsgi_app(environ, custom_start_response)
 
 app.wsgi_app = VercelPathFixMiddleware(app.wsgi_app)
 app.debug = False
