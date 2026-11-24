@@ -65,7 +65,10 @@ try:
 except OSError:
     pass
 
-app = Flask(__name__)
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 app.secret_key = 'rockfall-decision-support-secret-key-2025'
 app.config['UPLOAD_FOLDER'] = UPLOAD_PROTOCOLS_DIR
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB max
@@ -142,6 +145,7 @@ def get_dashboard_summary():
 
 @app.route('/')
 @app.route('/dashboard')
+@app.route('/api/index')
 def dashboard():
     """Module 1: Main System Dashboard."""
     summary = get_dashboard_summary()

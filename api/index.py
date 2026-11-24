@@ -9,5 +9,32 @@ if PROJECT_ROOT not in sys.path:
 
 from app import app
 
-# Vercel Serverless Function entrypoint
+class VercelPathFixMiddleware:
+    """
+    WSGI Middleware to adjust PATH_INFO when Vercel serverless rewrites
+    incoming requests (e.g., /(.*) -> /api/index).
+    Extracts the original request path from HTTP_X_MATCHED_PATH, x-matched-path,
+    or strips the /api/index prefix.
+    """
+    def __init__(self, wsgi_app):
+        self.wsgi_app = wsgi_app
+
+    def __call__(self, environ, start_response):
+        matched = (
+            environ.get('HTTP_X_MATCHED_PATH')
+            or environ.get('x-matched-path')
+            or environ.get('HTTP_X_FORWARDED_PATH')
+        )
+        if matched:
+            environ['PATH_INFO'] = matched
+        else:
+            path_info = environ.get('PATH_INFO', '')
+            if path_info in ('/api/index', '/api/index/'):
+                environ['PATH_INFO'] = '/'
+            elif path_info.startswith('/api/index/'):
+                environ['PATH_INFO'] = path_info[len('/api/index'):]
+
+        return self.wsgi_app(environ, start_response)
+
+app.wsgi_app = VercelPathFixMiddleware(app.wsgi_app)
 app.debug = False
